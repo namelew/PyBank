@@ -1,0 +1,1 @@
+Idem;Valor;Categoria;Estado
