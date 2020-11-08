@@ -1,3 +1,4 @@
-Nome;Sobrenome;CPF;NumeroCart;Senha;LimiteCredito
-Juliana;Gurjinho;03044618223;2345;122452;500.0
-Jo�o;Petrolino;11144477735;3241;123489;250.5
+Nome;Sobrenome;Cpf;NCartao;Senha;Saldo
+Juliana;Gurjinho;03044618223;100011110010;122452;50.0
+Jo�o;Petrolino;11144477735;100111120011;123489;250.5
+Augusto;Cury;85486976950;100211130100;624350;1000.0
