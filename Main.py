@@ -2,7 +2,7 @@ from Interface import menu, tarefas, usuarios
 from time import sleep
 
 
-class Cliente:  # classe onde será armazenado os dados
+class Cliente:
     def __init__(self, nome, sobre, cpf, ncar, senha, limite):
         self.nome = nome
         self.sobre = sobre
@@ -12,11 +12,11 @@ class Cliente:  # classe onde será armazenado os dados
         self.limite = limite
 
 
-arq = "clientes.txt"  # nome do arquivo
-if not tarefas.arquivoExiste(arq):  # se ele não existir, o programa irá criar
+arq = "clientes.txt"
+if not tarefas.arquivoExiste(arq):
     tarefas.criar(arq)
-fila = "fila.txt"  # nome do arquivo
-if not tarefas.arquivoExiste(arq):  # se ele não existir, o programa irá criar
+fila = "fila.txt"
+if not tarefas.arquivoExiste(arq):
     tarefas.criar(arq)
 cart = "cartoes.txt"
 if not tarefas.arquivoExiste(cart):
@@ -28,7 +28,7 @@ while True:
     user = user(input('Tipo de Usuário: ').upper().strip())
     login = user.Login()
     if login:
-        while True:  # Novamente a validação do CPF
+        while True:
             cpf = input("CPF: ").replace('.', '').replace('.', '').replace('-', '')
             if tarefas.validaCPF(cpf):
                 break
@@ -38,13 +38,11 @@ while True:
             while True:
                 op = menu.menu(['Novo Pedido', "Realizar Pagamento", 'Visualizar Inf. Conta', 'Acompanhar Operações', 'Sair'])
                 if op == 1:
-                    # Verifica se os dados são válidos. Se sim, continua a validação, se não, encerra a operação e
-                    # volta para a tela inicial.
                     cat = input("Categoria: ").upper().strip()
                     com = float(input("Valor da Compra: R$ ").replace(',', '.'))
                     tarefas.pedido(fila, com, cat, cpf)
                 elif op == 2:
-                    while True:  # Novamente a validação do CPF
+                    while True:
                         cpf = input("CPF: ").replace('.', '').replace('.', '').replace('-', '')
                         if tarefas.validaCPF(cpf):
                             break
@@ -64,13 +62,12 @@ while True:
     else:
         while True:
             op = menu.menu(['Cadastrar novo cliente', 'Validar operação de crédito', 'Validar Pagamento', 'Fechar'])
-            if op == 1:  # Cadastro de Novo Cliente
-                cliente = Cliente  # Criação do objeto 'cliente'
+            if op == 1:
+                cliente = Cliente
                 menu.titulo('OPÇÃO 1', 6, 42)
                 cliente.nome = input("Nome: ")
                 cliente.sobre = input("Sobrenome(Ultimo Nome): ")
-                while True:  # Validação do CPF
-                    # Antes de adicionar o valor, o programa irá retirar os dois pontos e o traço, se houver.
+                while True:
                     cliente.cpf = input("CPF: ").replace('.', '').replace('.', '').replace('-', '')
                     if tarefas.validaCPF(cliente.cpf):
                         break
@@ -82,12 +79,11 @@ while True:
                     print("Número já existente! Por favor, digite novamente!")
                 cliente.senha = menu.leiaInt("Senha(6 Digitos): ")
                 cliente.limite = menu.leiaFloat("Limite de Crédito: R$ ")
-                # Escrita dos dados dentro do arquivo cliente
                 tarefas.cadastra(arq, cliente)
                 sleep(1)
-            elif op == 2:  # Validação de Operação de Crédito
+            elif op == 2:
                 menu.titulo('OPÇÃO 2', 6, 42)
-                while True:  # Novamente a validação do CPF
+                while True:
                     cpf = input("CPF: ").replace('.', '').replace('.', '').replace('-', '')
                     if tarefas.validaCPF(cpf):
                         break
@@ -95,13 +91,13 @@ while True:
                 tarefas.validaPedido(fila, cpf)
                 sleep(1)
             elif op == 3:
-                while True:  # Novamente a validação do CPF
+                while True:
                     cpf = input("CPF: ").replace('.', '').replace('.', '').replace('-', '')
                     if tarefas.validaCPF(cpf):
                         break
                     print("Erro! CPF inválido, por favor digite novamente!")
                 tarefas.confPag(fila, cpf)
-            elif op == 4 or op == 0:  # Encerrar o programa
+            elif op == 4 or op == 0:
                 break
             else:
                 print("\033[0;31mOpção inválida! Por favor, digite uma das opções acima.\033[m")
