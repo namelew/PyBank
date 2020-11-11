@@ -28,9 +28,9 @@ try:
 except Exception as erro:
     print(f"Ocorreu um erro de {erro} durante a procura do registro")
 finally:
-    arq.close()```  
+    arq.close()´´´  
  * Função implementada no submódulo "tarefas":
- ```def vpedidos(a, x):
+ ´´´def vpedidos(a, x):
     try:
         arq = open(a, 'r')
         for linha in arq:
@@ -41,7 +41,7 @@ finally:
     except Exception as erro:
         print(f"Erro: {erro}")
     finally:
-        arq.close()```
+        arq.close()´´´
 ### Módulo Interface  
    Este modulo é responsável por trabalhar com todo o processamento de informações do sistema, sendo subdivido em três submódulos: menu, tarefas e usuarios.  
 #### Submódulo "menu"  
