@@ -14,6 +14,8 @@ Funcionalidades:
    Ao todo foram criados 4 códigos em python que trabalham em conjunto e um arquivo de teste para funções que serão implementadas e correções de bugs. São eles:
 ### Main.py  
    Este é o arquivo principal do projeto, nele serão executadas as funções dos outros modulos. Ele é responsável por passar os dados as funções onde serão processados, fazer a chamada destas e garantir que todas trabalhem em conjunto.  
+### teste.py
+Este é um arquivo exclusivo para debuging e teste de funções que serão implementadas nos módulos do projeto. 
 ### Módulo Interface  
    Este modulo é responsável por trabalhar com todo o processamento de informações do sistema, sendo subdivido em três submódulos: menu, tarefas e usuarios.  
 #### Submódulo "menu"  
