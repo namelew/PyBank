@@ -1,4 +1,4 @@
-#arquivo de teste para funções
+# arquivo de teste para funções
 a = 'fila.txt'
 try:
     arq = open(a, 'r')
