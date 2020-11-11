@@ -205,19 +205,11 @@ def pedido(a, x, t, y):
 def vpedidos(a, x):
     try:
         arq = open(a, 'r')
-        achou = False  # inicia a flag
         for linha in arq:
-            # Transforma reg em uma variável de escopo global
-            # transforma uma linha do arquivo em uma lista, separando pelo ';'
-            ped = linha.split(';')
-            if str(x) == ped[0]:
-                achou = True  # caso ache, muda a flag para True e encerra o loop
-                break
-        if achou:
-            print(
-                f"Index: {ped[0]}\nCat: {ped[1]}\nValor: R$ {ped[2].replace('.',',')}\nEstado: {ped[3]}")
-        else:
-            titulo("PEDIDO NÃO ENCONTRADO!")
+            op = linha.replace("\n", '').split(';')
+            print("-" * 44)
+            print(f"{op[0]:^11}{op[1]:^11}{op[2]:^10}{op[3]:^10}")
+        print("-" * 44)
     except Exception as erro:
         print(f"Erro: {erro}")
     finally:
