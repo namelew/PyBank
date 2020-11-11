@@ -89,4 +89,7 @@ finally:
 ##### 17. confPag()
 #### Submódulo "usuario"
    Por fim, esse é responsável por garantir a segurança e o acesso de ambos os tipos de usuário, root e cliente. Possue apenas a classe Users que possue e atributos funções que realizam essas funções. 
-### Arquivos ".txt" 
+### Arquivos ".txt"  
+#### clientes.txt
+#### cartoes.txt
+#### fila.txt
