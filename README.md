@@ -66,8 +66,59 @@ finally:
 #### Submódulo "menu"  
    Este é responsável pela parte visual do sistema, garantindo que o usuário seja capaz de navegar de forma intuitiva pelo mesmo, além de garantir que o próprio designer do sistema seja agradável aos olhos. Possue as seguintes funções:
 ##### 1. titulo()
+Esta função é responsável por imprimir na tela, uma mensagem com formatação de título. Desta forma, é responsável "por receber e orientar" o usuário dentro do programa.
+ * Código da Função dentro do módulo "menu":
+ ```
+ def titulo(msg, c=0, tan=0):
+    """
+    -> Formata uma string em um título de tamanho e cor selecionável com uma linha em cima e outra em baixo
+    e com o texto centralizado.
+    :param msg: string
+    :param c: cor do texto(padrão sem cor)
+    :param tan: tamanho do texto(padrão len(string) + 4)
+    :return: none
+    """
+    if tan == 0:
+        tam = len(msg) + 4
+    else:
+        tam = tan
+    print(f"{cor[c]}-"*tam)
+    print(f"{msg}".center(tam))
+    print(f"-{cor[c]}" * tam, end='')
+    print(cor[0])
+ ```
 ##### 2. linha()
+Basicamente, imprime uma linha na tela de tamanho manipulável. Usada para simular "multiplas páginas" dentro do programa.
+ * Código da Função dentro do módulo "menu":
+ ```
+def linha(tam=42):
+    """
+    -> Retorna uma linha de tamanho selecionável
+    :param tam: tamanho da linha(padrão 42)
+    :return: retorna linha
+    """
+    return "-" * tam
+ ```
 ##### 3. menu()
+Recebe uma lista de strings que armazena as opções do programa. Ajuda o usuário a visualizar as funcionalidades do sistema e tomar decisões baseadas nelas.
+ * Código da Função dentro do módulo "menu":
+ ```
+ def menu(list):
+    """
+    -> Recebe uma lista com n strings que representam as opções do menu, formata e exibi ela
+    na tela. Depois, recebe um valor inteiro referente a opção selecionada e o retorna.
+    :param list: lista com as strings das opções
+    :return: opção selecionada
+    """
+    c = 1
+    print(linha())
+    for i in list:
+        print(f"\033[0;33m{c} -\033[0;34m {i}\033[m")
+        c += 1
+    print(linha())
+    o = leiaInt("Opção: ")
+    return o
+ ```
 #### Submódulo "tarefas"
    Esse, por outro lado, cuída das requisições e tarefas que serão executadas pelo sistema. É o maior arquivo python e o que possui mais funções. Também cuida das redundâncias do sistema e sua integração com o *bando de dados*, o qual é simulado pelos arquivos .txt.
 ##### 1. calcularCpf()
