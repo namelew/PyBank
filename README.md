@@ -3,7 +3,12 @@ Um pseudo-aplicativo de um aplicativo de um banco escrito em python(A pseudo app
 
 Funcionalidades:  
 
-    * Cadastro de Clientes(Disponível) * Solicitação de Compras(Disponível) * Realização de Pagamentos(Disponével) * Validação de Transações(Disponível) * Histórico de Movimentações separado por categorias(Disponível) * Interface Gráfica(Indisponível)  
+    * Cadastro de Clientes(Disponível)
+    * Solicitação de Compras(Disponível)
+    * Realização de Pagamentos(Disponével)
+    * Validação de Transações(Disponível)
+    * Histórico de Movimentações separado por categorias(Disponível)
+    * Interface Gráfica(Indisponível)  
 ## Arquivos  
 ### Códigos Python  
    Ao todo foram criados 4 códigos em python que trabalham em conjunto e um arquivo de teste para funções que serão implementadas e correções de bugs. São eles:
