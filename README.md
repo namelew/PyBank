@@ -5,5 +5,5 @@ Feathers:
     -Solicitação de Compras(Disponível)
     -Realização de Pagamentos(Disponével)
     -Validação de Transações(Disponível)
-    -Histórico de Movimentações separado por categorias(Indisponível)
+    -Histórico de Movimentações separado por categorias(Disponível)
     -Interface Gráfica(Indisponível)
