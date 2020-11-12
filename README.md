@@ -364,17 +364,175 @@ Abre uma tabela que mostra ao usuário, o identificador da movimentação, a sua
         arq.close()
  ```
 ##### 10. validaPedido()
+Recebe um pedido feito por um usuário e verifica se ele será aprovado ou negado.
+ * Código da Função dentro do módulo "Tarefas":
+ ```
+ def validaPedido(a, x):
+    try:
+        arq = open(a, 'r+')
+        achou = False
+        for linha in arq:
+            ped = linha.split(';')
+            if str(x) == ped[0] and ped[3] == "EM ANALISE\n":
+                achou = True
+                break
+        string = ";".join(ped)
+        index = encontrar_string(a, string)
+        if achou:
+            if validaTrans(str(x), ped[2]):
+                alterar_linha(a, index, f"{ped[0]};{ped[1]};{ped[2]};APROVADO\n")
+                print(f"Operação Finalizada! O pedido foi APROVADO!")
+                redCred("clientes.txt", ped[0], ped[2])
+            else:
+                alterar_linha(a, index, f"{ped[0]};{ped[1]};{ped[2]};NEGADO\n")
+                print(f"Operação Finalizada! O pedido foi NEGADO!")
+        else:
+            print("Pedido não encontrado")
+        arq.close()
+    except Exception as erro:
+        print(f"Erro: {erro}")
+ ```
 ##### 11. encontrar_string()
+A partir do nome do arquivo onde a string está e uma parte da string desejada e retorna o index da linha onde esta string se encontra.
+ * Código da Função dentro do módulo "tarefas":
+ ```
+ def encontrar_string(path,string):
+    with open(path,'r') as f:
+        texto=f.readlines()
+    for i in texto:
+        if string in i:
+            return texto.index(i)
+    print('String não encontrada')
+ ```
 ##### 12. alterar_linha()
+Altera uma linha dentro de um arquivo .txt.
+ * Código da Função dentro do módulo "tarefas":
+ ```
+ def alterar_linha(path,index_linha,nova_linha):
+    with open(path,'r') as f:
+        texto=f.readlines()
+    with open(path,'w') as f:
+        for i in texto:
+            if texto.index(i)==index_linha:
+                f.write(nova_linha+'\n')
+            else:
+                f.write(i)
+ ```
 ##### 13. redCred()
+Após o fim e liberação do pedido, reduz do crédito da conta o valor do pedido.
+ * Código da Função dentro do módulo "tarefas":
+ ```
+ def redCred(a, x, r):
+    contas = open(a, 'r+')
+    achou = False
+    index = encontrar_string(a, x)
+    for conta in contas:
+        info = conta.split(";")
+        if info[2] == str(x):
+            achou = True
+            break
+    ns = float(info[5]) - float(r)
+    alterar_linha(a, index, f"{info[0]};{info[1]};{info[2]};{info[3]};{info[4]};{ns}")
+    contas.close()
+ ```
 ##### 14. libSaldo()
+Após a confirmação do pagamento, soma ao limite de credito o valor que foi computado no registro de pagamento.
+ * Código da Função dentro do módulo "tarefas":
+ ```
+ def libSaldo(a, x, ad):
+    contas = open(a,'r+')
+    achou = False
+    for conta in contas:
+        info = conta.split(';')
+        if info[2] == str(x):
+            achou = True
+            break
+    index = encontrar_string(a, conta)
+    novosd = float(info[5]) + float(ad)
+    alterar_linha(a, index, f"{info[0]};{info[1]};{info[2]};{info[3]};{info[4]};{novosd}")
+    print(f"Operação Finalizada! Adicionado mais R$ {float(ad):.2f} a conta de {info[0]} {info[1]}!")
+    contas.close()
+ ```
 ##### 15. verifCart()
+Verifica se determinado cartão existe dentro da entidade "cartão", caso não exista, este adicionara ao número do cartão aos registros da entidade.
+ * Código da Função dentro do módulo "tarefas":
+ ```
+ def verifCart(a, x):
+    with open(a, 'r') as arq:
+        achou = False
+        for reg in arq:
+            valor = reg.replace('\n','')
+            if valor == str(x):
+                achou = True
+                break
+    if achou:
+        return False
+    else:
+        with open(a, 'a') as arq:
+            arq.write(str(x)+'\n')
+        return True
+ ```
 ##### 16. realPag()
+Faz uma requisição de pagamento, adicionado esta a entidade "fila".
+ * Código da Função dentro do módulo "tarefas":
+ ```
+ def realPag(a, x, i):
+    with open(a, 'a') as arq:
+        arq.write(f'{i};PAGAMENTO;{x};ESPERA')
+    print("Pagamento Realizado! Esperando confirmação.")
+ ```
 ##### 17. confPag()
+Confirma que o pagamento foi realizado e muda seu estado para "aceito".
+ * Código da Função dentro do módulo "tarefas":
+ ```
+ def confPag(a, i):
+    with open(a, 'r+') as arq:
+        achou = False
+        for reg in arq:
+            info = reg.split(';')
+            if info[0] == str(i) and info[3] == 'ESPERA\n':
+                achou = True
+                break
+        index = encontrar_string(a, reg)
+        if achou:
+            alterar_linha(a, index, f'{info[0]};{info[1]};{info[2]};RECEBIDO')
+            libSaldo('clientes.txt', i, info[2])
+        else:
+            print("Pagamento não encontrado!")
+ ```
 #### Submódulo "usuario"
    Por fim, esse é responsável por garantir a segurança e o acesso de ambos os tipos de usuário, root e cliente. Possue apenas a classe Users que possue e atributos funções que realizam essas funções.
 ##### Class Users
-### Arquivos ".txt"  
+Garante que existam dois usuários diferentes utilizando o sistema, o Root, responsável por manter o sistema, e o Cliente, que utiliza o sistema usurfrui de seus benefícios.
+ * Código dentro do módulo "usuarios":
+ ```
+ class Users:
+    def __init__(self, acesso):
+        self.acesso = acesso
+
+    def Login(self):
+        if self.acesso == 'CLIENTE':
+            return True
+        if self.acesso == 'ROOT':
+            return False
+        else:
+            print("Opção Inválida! Por favor, digite novamente!")
+ ```
+### Arquivos ".txt"
+Estes arquivos simulam as entidades que existiriam em um banco de dados vinculado ao app.
 #### clientes.txt
+Armazena os dados do cliente que são:
+ * Nome
+ * Sobrenome
+ * CPF
+ * Número do Cartão
+ * Senha
+ * Saldo da Conta
 #### cartoes.txt
+Armazena os números de cartão que já forão usados para que não haja registros duplicados 
 #### fila.txt
+Armazena as movimentações realizadas pelos clientes. Os atributos de uma movimentação são:
+ * Identificador do Cliente
+ * Categoria da Movimentação
+ * Valor da Movimentação
+ * Estado da Movimentação
