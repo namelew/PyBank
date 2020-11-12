@@ -122,11 +122,192 @@ Recebe uma lista de strings que armazena as opções do programa. Ajuda o usuár
 #### Submódulo "tarefas"
    Esse, por outro lado, cuída das requisições e tarefas que serão executadas pelo sistema. É o maior arquivo python e o que possui mais funções. Também cuida das redundâncias do sistema e sua integração com o *bando de dados*, o qual é simulado pelos arquivos .txt.
 ##### 1. calcularCpf()
+Utilizada durante o processo de cadastro de clientes. Essa função recebe um valor que é considerado como cpf e gera um espelho desse que será lido como o cpf verdadeiro. No fim, retorna a lista com ambos os cpf's que será comparada por outra função.
+ * Código da Função dentro do módulo "tarefas":
+ ```
+ def calculaCpf(x):
+    """
+    -> Recebe um cpf(x) e retorna uma lista com:
+    - Espaço 0: CPF(x)
+    -Espaço 1: Espelho de x
+    -Espaço 2: Lista vazia que será usada como intermediária entre 0 e 1
+    :param x: cpf digitado
+    :return: lista com 3 sublistas
+    """
+    import re
+    valida = [[], [], []]
+    while True:
+        try:
+            valida[0] = x[:9]
+            for n in valida[0]:
+                converte = int(n)
+                valida[1].append(converte)
+            c = 2
+            for num in range(0, 2):
+                for i in reversed(valida[1]):
+                    valida[2].append(i * c)
+                    c += 1
+                soma = 0
+                c = 2
+                for v in valida[2]:
+                    soma += v
+                resto = soma % 11
+                if resto < 2:
+                    digi = 0
+                else:o
+                    digi = 11 - resto
+                valida[1].append(digi)
+                valida[2].clear()
+            valida[0] = x.replace('.', '').replace('-', '')
+        except:
+            print(
+                "Ocorreu um erro! Por favor informe o CPF no formato XXX.XXX.XXX-YY ou XXXXXXXXXYY")
+            x = input("CPF: ")
+            continue
+        else:
+            break
+    return valida
+ ```
 ##### 2. validaCPF()
+Recebe um valor que é identificado como cpf e retorna um valor booleano referente ao caso do cpf ser válido ou não.
+ * Código da Função dentro do módulo de "tarefas":
+ ```
+ def validaCPF(y):
+    """
+    -> Recebe um cpf e o joga em CalculaCpf(), depois compara o CPF original com seu espelho e retorna se ele
+    é valida(True) ou não(False)
+    :param y: CPF que vai ser jogado em CalculaCpf()
+    :return: Booleano(True/False)
+    """
+    final = calculaCpf(y)
+    for v in final[1]:
+        final[2].append(str(v))
+    final[2] = ''.join(final[2])
+    if final[0] == final[2]:
+        return True
+    else:
+        return False
+ ```
 ##### 3. findCliente()
+Determina se um cliente existe ou não dentro do banco, buscando ele pelo cpf, ou o número do cartão, e a sua senha.
+ * Código da Função dentro do módulo "tarefas":
+ ```
+ def findCliente(a, x, y=0, z=0):
+    """
+    -> Verifica se determinado cliente existe dentro do arquivo a(clientes.txt), procurando se o CPF(x) e a senha(y)
+    existem dentro do arquivo.
+    :param a: Arquivo onde ocorrerá a validação
+    :param x: CPF
+    :param y: Senha
+    :param z: Número do Cartão
+    :return: retorna um valor booleano referente ao fato do registro existir(True) ou não(False)
+    """
+    try:
+        achou = False
+        arq = open(a, 'r')
+        if y != 0 and z == 0:
+            for linha in arq:
+                reg = linha.split(';')
+                if str(x) == reg[2] and str(y) == reg[4]:
+                    achou = True
+                    break
+                if achou:
+                    break
+        else:
+            for linha in arq:
+                reg = linha.split(';')
+                if str(x) == reg[2] and str(z) == reg[3]:
+                    achou = True
+                    break
+                if achou:
+                    break
+    except Exception as erro:
+        print(f"Ocorreu um erro de {erro} durante a procura do registro")
+    else:
+        if achou:
+            return True
+        else:
+            return False
+    finally:
+        arq.close()
+ ```
 ##### 4. validaTrans()
+Define se uma transição será liberada ou não através de um retorno booleano.
+ * Código da Função dentro do módulo "tarefas":
+ ```
+ def validaTrans(i, x):
+    """
+    -> Recebe o valor da transação e imprime na tela se ela estará liberada ou não
+    :param x: valor em reais da trasação
+    :return: none
+    """
+    arq = open('clientes.txt', 'r')
+    for linha in arq:
+        reg = linha.split(";")
+        if reg[2] == str(i):
+            break
+    valor  = float(x)
+    if valor <= float(reg[5].replace('\n', '')):
+        return True
+    else:
+        return False
+    arq.close()
+ ```
 ##### 5. arquivoExiste()
+Verifica se determinado arquivo existe dentro do projeto. É usado dentro do Main.py para criar os arquivos .txt, caso eles não existão.
+ * Código da Função dentro do módulo "tarefas":
+ ```
+ def arquivoExiste(x):
+    """
+    -> Verifica se o arquivo x existe dentro do projeto
+    :param x: arquivo a ser procurado
+    :return: booleano True(Existe)/False(Não Existe)
+    """
+    try:
+        a = open(x, 'rt')
+        a.close()
+    except FileNotFoundError:
+        return False
+    else:
+        return True
+ ```
+ * Uso dentro do arquivo "Main.py":
+ ```
+arq = "clientes.txt"
+if not tarefas.arquivoExiste(arq):
+    tarefas.criar(arq)
+fila = "fila.txt"
+if not tarefas.arquivoExiste(arq):
+    tarefas.criar(arq)
+cart = "cartoes.txt"
+if not tarefas.arquivoExiste(cart):
+    tarefas.criar(cart)
+user = usuarios.Users
+ ```
 ##### 6. criar()
+Cria um arquivo .txt de nome selecionável. É usado para criar os arquivos necessários para o projeto funcionar.
+ * Código da Função dentro do módulo "tarefas":
+ ```
+ def criar(x):
+    """
+    -> Cria um arquivo de nome x
+    :param x: nome do arquivo
+    :return: none
+    """
+    try:
+        a = open(x, 'wt+')
+        a.close()
+    except:
+        print(f"{cor[2]}Houve um erro na criação do arquivo!{cor[[0]]}")
+    else:
+        print(f"{cor[4]}Arquivo {a} criado com sucesso!{cor[0]}")
+ ```
+  * Uso da função dentro de Main.py:
+  ```
+arq = "clientes.txt"
+if not tarefas.arquivoExiste(arq):
+    tarefas.criar(arq)
+  ```
 ##### 7. cadastra()
 ##### 8. pedido()
 ##### 9. vpedidos()
