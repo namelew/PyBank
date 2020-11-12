@@ -309,8 +309,60 @@ if not tarefas.arquivoExiste(arq):
     tarefas.criar(arq)
   ```
 ##### 7. cadastra()
+Função responsável por cadastrar os clientes no sistema. Ela recebe os dados e os insere no arquivo .txt que simula a entidade "cliente".
+ * Código da Função dentro do módulo "tarefas":
+ ```
+ def cadastra(a, c):
+    """
+    -> cadastra os valores do objeto(c) no arquivo de nome a
+    :param a: arquivo onde será cadastrado os dados de c
+    :param c: objeto que está armazenando os dados
+    :return: none
+    """
+    try:
+        arq = open(a, 'a')
+    except:
+        print(f"{cor[2]}Houve um erro durante a execução do arquivo!{cor[0]}")
+    else:
+        try:
+            arq.write(f"{c.nome};{c.sobre};{c.cpf};{c.ncar};{c.senha};{c.limite}\n")
+        except Exception as erro:
+            print(f"{cor[2]}Houve um erro de {erro} durante a inscrição dos dados!{cor[0]}")
+        else:
+            titulo(f"{c.nome.upper()} {c.sobre.upper()} ADICIONADO AOS REGISTROS", c=5)
+        finally:
+            arq.close()
+ ```
 ##### 8. pedido()
+Cria um pedido e o insere na entidade "fila", onde ficam salvos todas as movimentações feitas no sistema.
+ * Código da Função do módulo "tarefas":
+ ```
+ def pedido(a, x, t, y):
+    try:
+        arq = open(a, 'a')
+        arq.write(f"{y};{t};{x};EM ANALISE\n")
+    except Exception as erro:
+        print(f"Erro: {erro}")
+    else:
+        titulo("PEDIDO ADICIONADO A FILA")
+    finally:
+        arq.close()
+ ```
 ##### 9. vpedidos()
+Abre uma tabela que mostra ao usuário, o identificador da movimentação, a sua categoria, o valor da movimentação e o seu estado atual.
+ * Código da Função no módulo "tarefas":
+ ```
+ def pedido(a, x, t, y):
+    try:
+        arq = open(a, 'a')
+        arq.write(f"{y};{t};{x};EM ANALISE\n")
+    except Exception as erro:
+        print(f"Erro: {erro}")
+    else:
+        titulo("PEDIDO ADICIONADO A FILA")
+    finally:
+        arq.close()
+ ```
 ##### 10. validaPedido()
 ##### 11. encontrar_string()
 ##### 12. alterar_linha()
