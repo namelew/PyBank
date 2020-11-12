@@ -15,29 +15,25 @@ def calculaCpf(x):
     valida = [[], [], []]
     while True:
         try:
-            valida[0] = x[:9]   # Pega os 9 primeiros digitos do cpf
+            valida[0] = x[:9]
             for n in valida[0]:
                 converte = int(n)
-                # Converte  cada um para int e adiciona a segunda sublista
                 valida[1].append(converte)
             c = 2
             for num in range(0, 2):
-                # Multiplica eles por c e adiciona na terceira sublista
                 for i in reversed(valida[1]):
                     valida[2].append(i * c)
                     c += 1
                 soma = 0
                 c = 2
                 for v in valida[2]:
-                    soma += v   # soma todos os valores da terceira lista
-                resto = soma % 11   # tira o resto da divisão da soma por 11
-                if resto < 2:  # Se o resto da divisão for menor que dois, o digito que será adicionado será 0
+                    soma += v
+                resto = soma % 11
+                if resto < 2:
                     digi = 0
-                else:  # Senão, será 11 - o resto da divisão
+                else:o
                     digi = 11 - resto
-                # por fim, adiciona o digito na segunda lista
                 valida[1].append(digi)
-                # apaga o que tiver na lista 3, e repete o processo mais uma vez
                 valida[2].clear()
             valida[0] = x.replace('.', '').replace('-', '')
         except:
@@ -47,7 +43,7 @@ def calculaCpf(x):
             continue
         else:
             break
-    return valida  # retorna a lista interia para continuar o processo
+    return valida
 
 
 def validaCPF(y):
@@ -59,13 +55,12 @@ def validaCPF(y):
     """
     final = calculaCpf(y)
     for v in final[1]:
-        # tranforma o que estava em int pra str de novo
         final[2].append(str(v))
-    final[2] = ''.join(final[2])    # junta em uma única string
-    if final[0] == final[2]:  # Compara o resultado para ver se ambos são iguais
-        return True  # Se sim, o CPF é válido
+    final[2] = ''.join(final[2])
+    if final[0] == final[2]:
+        return True
     else:
-        return False  # Senão, ele é inválido
+        return False
 
 
 def findCliente(a, x, y=0, z=0):
@@ -79,25 +74,21 @@ def findCliente(a, x, y=0, z=0):
     :return: retorna um valor booleano referente ao fato do registro existir(True) ou não(False)
     """
     try:
-        achou = False  # inicia a flag
-        arq = open(a, 'r')  # abri o arquivo
+        achou = False
+        arq = open(a, 'r')
         if y != 0 and z == 0:
             for linha in arq:
-                # Transforma reg em uma variável de escopo global
-                # transforma uma linha do arquivo em uma lista, separando pelo ';'
                 reg = linha.split(';')
                 if str(x) == reg[2] and str(y) == reg[4]:
-                    achou = True  # caso ache, muda a flag para True e encerra o loop
+                    achou = True
                     break
                 if achou:
-                    break  # também encerra o loop de fora
+                    break
         else:
             for linha in arq:
-                # Transforma reg em uma variável de escopo global
-                # transforma uma linha do arquivo em uma lista, separando pelo ';'
                 reg = linha.split(';')
                 if str(x) == reg[2] and str(z) == reg[3]:
-                    achou = True  # caso ache, muda a flag para True e encerra o loop
+                    achou = True
                     break
                 if achou:
                     break
@@ -105,9 +96,9 @@ def findCliente(a, x, y=0, z=0):
         print(f"Ocorreu um erro de {erro} durante a procura do registro")
     else:
         if achou:
-            return True  # Se achar vai retorna que achou(True)
+            return True
         else:
-            return False  # Se não achar vai retorna que não(False)
+            return False
     finally:
         arq.close()
 
@@ -124,9 +115,7 @@ def validaTrans(i, x):
         if reg[2] == str(i):
             break
     valor  = float(x)
-    if valor <= float(reg[5].replace('\n', '')):  # retira a quebra de linha para reg[5] poder ser convertido em int
-        # pega reg(especificamente o elemento 5), que foi declarada global anteriormente, e compara com o valor da com_
-        # pra para dizer se ela pode ser feita ou não.
+    if valor <= float(reg[5].replace('\n', '')):
         return True
     else:
         return False
@@ -139,7 +128,7 @@ def arquivoExiste(x):
     :param x: arquivo a ser procurado
     :return: booleano True(Existe)/False(Não Existe)
     """
-    try:  # tenta ler o arquivo x, se não conseguir, retorna que ele não existi e viceversa
+    try:
         a = open(x, 'rt')
         a.close()
     except FileNotFoundError:
@@ -155,7 +144,6 @@ def criar(x):
     :return: none
     """
     try:
-        # Cria o arquivo x depois o fecha
         a = open(x, 'wt+')
         a.close()
     except:
@@ -172,21 +160,17 @@ def cadastra(a, c):
     :return: none
     """
     try:
-        arq = open(a, 'a')  # Abri o arquivo em "modo de adição"
+        arq = open(a, 'a')
     except:
         print(f"{cor[2]}Houve um erro durante a execução do arquivo!{cor[0]}")
     else:
         try:
-            # adiciona os elementos do objeto nele
             arq.write(f"{c.nome};{c.sobre};{c.cpf};{c.ncar};{c.senha};{c.limite}\n")
         except Exception as erro:
-            # se ouver um erro, ele dirá que houve um erro em vez de encerrar
             print(f"{cor[2]}Houve um erro de {erro} durante a inscrição dos dados!{cor[0]}")
         else:
-            # se tudo der certo, essa mensagem aparecerá
             titulo(f"{c.nome.upper()} {c.sobre.upper()} ADICIONADO AOS REGISTROS", c=5)
         finally:
-            # e por fim, o arquivo será fechado
             arq.close()
 
 
