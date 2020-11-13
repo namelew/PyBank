@@ -500,6 +500,32 @@ Confirma que o pagamento foi realizado e muda seu estado para "aceito".
         else:
             print("Pagamento não encontrado!")
  ```
+##### 18. listarMovimento():
+Esta função imprime na tela um pequeno extrato da conta que contém a movimentação total por categoria.
+ * Código da Função dentro do módulo "tarefas":
+ ```
+ def listarMovimento(a, idem):
+    arq = open(a, 'r')
+    categoria = []
+    totalcat = []
+    for linha in arq:
+        registro = linha.split(";")
+        if registro[0] == idem:
+            categoria.append(registro[1])
+    for c in range(0, len(categoria)):
+        arq = open(a, 'r')
+        soma = 0
+        for line in arq:
+            mark = line.split(";")
+            if categoria[c] == mark[1] and mark[0] == idem:
+                soma += float(mark[2])
+        totalcat.append(soma)
+        arq.close()
+    titulo("Total Por Categoria", tan=44)
+    for cont in range(0, len(categoria)):
+        print(f"{categoria[cont]:^22} {totalcat[cont]:^22}")
+        print("-" * 44)
+ ```
 #### Submódulo "usuario"
    Por fim, esse é responsável por garantir a segurança e o acesso de ambos os tipos de usuário, root e cliente. Possue apenas a classe Users que possue e atributos funções que realizam essas funções.
 ##### Class Users
