@@ -36,7 +36,7 @@ while True:
         s = input("Senha: ")
         if tarefas.findCliente(arq, cpf, s, z=0):
             while True:
-                op = menu.menu(['Novo Pedido', "Realizar Pagamento", 'Visualizar Inf. Conta', 'Acompanhar Operações', 'Sair'])
+                op = menu.menu(['Novo Pedido', "Realizar Pagamento", 'Visualizar Inf. Conta', 'Extrato da Conta', 'Sair'])
                 if op == 1:
                     cat = input("Categoria: ").upper().strip()
                     com = float(input("Valor da Compra: R$ ").replace(',', '.'))
@@ -53,6 +53,7 @@ while True:
                     usuarios.Mostrar(arq, cpf)
                 elif op == 4:
                     tarefas.vpedidos(fila, cpf)
+                    tarefas.listarMovimento(fila, cpf)
                 elif op == 5 or op == 0:
                     break
                 else:

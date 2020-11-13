@@ -11,7 +11,6 @@ def calculaCpf(x):
     :param x: cpf digitado
     :return: lista com 3 sublistas
     """
-    import re
     valida = [[], [], []]
     while True:
         try:
@@ -31,7 +30,7 @@ def calculaCpf(x):
                 resto = soma % 11
                 if resto < 2:
                     digi = 0
-                else:o
+                else:
                     digi = 11 - resto
                 valida[1].append(digi)
                 valida[2].clear()
@@ -92,6 +91,7 @@ def findCliente(a, x, y=0, z=0):
                     break
                 if achou:
                     break
+        arq.close()
     except Exception as erro:
         print(f"Ocorreu um erro de {erro} durante a procura do registro")
     else:
@@ -99,8 +99,6 @@ def findCliente(a, x, y=0, z=0):
             return True
         else:
             return False
-    finally:
-        arq.close()
 
 
 def validaTrans(i, x):
@@ -114,12 +112,12 @@ def validaTrans(i, x):
         reg = linha.split(";")
         if reg[2] == str(i):
             break
-    valor  = float(x)
+    valor = float(x)
+    arq.close()
     if valor <= float(reg[5].replace('\n', '')):
         return True
     else:
         return False
-    arq.close()
 
 
 def arquivoExiste(x):
@@ -178,12 +176,11 @@ def pedido(a, x, t, y):
     try:
         arq = open(a, 'a')
         arq.write(f"{y};{t};{x};EM ANALISE\n")
+        arq.close()
     except Exception as erro:
         print(f"Erro: {erro}")
     else:
         titulo("PEDIDO ADICIONADO A FILA")
-    finally:
-        arq.close()
 
 
 def vpedidos(a, x):
@@ -194,10 +191,9 @@ def vpedidos(a, x):
             print("-" * 44)
             print(f"{op[0]:^11}{op[1]:^11}{op[2]:^10}{op[3]:^10}")
         print("-" * 44)
+        arq.close()
     except Exception as erro:
         print(f"Erro: {erro}")
-    finally:
-        arq.close()
 
 
 def validaPedido(a, x):
@@ -310,3 +306,26 @@ def confPag(a, i):
             libSaldo('clientes.txt', i, info[2])
         else:
             print("Pagamento não encontrado!")
+
+
+def listarMovimento(a, idem):
+    arq = open(a, 'r')
+    categoria = []
+    totalcat = []
+    for linha in arq:
+        registro = linha.split(";")
+        if registro[0] == idem:
+            categoria.append(registro[1])
+    for c in range(0, len(categoria)):
+        arq = open(a, 'r')
+        soma = 0
+        for line in arq:
+            mark = line.split(";")
+            if categoria[c] == mark[1] and mark[0] == idem:
+                soma += float(mark[2])
+        totalcat.append(soma)
+        arq.close()
+    titulo("Total Por Categoria", tan=44)
+    for cont in range(0, len(categoria)):
+        print(f"{categoria[cont]:^22} {totalcat[cont]:^22}")
+        print("-" * 44)
