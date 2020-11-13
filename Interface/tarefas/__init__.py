@@ -292,6 +292,7 @@ def realPag(a, x, i):
         arq.write(f'{i};PAGAMENTO;{x};ESPERA')
     print("Pagamento Realizado! Esperando confirmação.")
 
+
 def confPag(a, i):
     with open(a, 'r+') as arq:
         achou = False
