@@ -9,7 +9,7 @@ Um pseudo-aplicativo de um aplicativo de um banco escrito em python(A pseudo app
  * [x] Realização de Pagamentos
  * [x] Validação de Transações
  * [x] Histórico de Movimentações separado por categorias
- * [] Interface Gráfica
+ * [ ] Interface Gráfica
 ## Arquivos  
 ### Códigos Python  
    Ao todo foram criados 4 códigos em python que trabalham em conjunto e um arquivo de teste para funções que serão implementadas e correções de bugs. São eles:
