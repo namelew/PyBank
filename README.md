@@ -62,7 +62,7 @@ finally:
         arq.close()
 ```
 ### Módulo Interface  
-   Este modulo é responsável por trabalhar com todo o processamento de informações do sistema, sendo subdivido em três submódulos: [menu](#Submódulo "menu"), [tarefas](#Submódulo "tarefas") e [usuarios](#Submódulo "usuarios").  
+   Este modulo é responsável por trabalhar com todo o processamento de informações do sistema, sendo subdivido em três submódulos: menu, tarefas e usuarios.  
 #### Submódulo "menu"  
    Este é responsável pela parte visual do sistema, garantindo que o usuário seja capaz de navegar de forma intuitiva pelo mesmo, além de garantir que o próprio designer do sistema seja agradável aos olhos. Possue as seguintes funções:
 ##### 1. titulo()
