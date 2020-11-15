@@ -1,4 +1,5 @@
 # PyBank
+---
 Um pseudo-aplicativo de um aplicativo de um banco escrito em python(A pseudo app off a bank application made in python).  
 
 ## Funcionalidades  
@@ -14,7 +15,7 @@ Um pseudo-aplicativo de um aplicativo de um banco escrito em python(A pseudo app
    Ao todo foram criados 4 códigos em python que trabalham em conjunto e um arquivo de teste para funções que serão implementadas e correções de bugs. São eles:
 ### Main.py  
    Este é o arquivo principal do projeto, nele serão executadas as funções dos outros modulos. Ele é responsável por passar os dados as funções onde serão processados, fazer a chamada destas e garantir que todas trabalhem em conjunto.  
- * Um pedaço do código Main.py, utilizando as funções vpedidos(), validaCPF(), realPagamento() e Mostrar():
+ * Um pedaço do código *Main.py*, utilizando as funções *vpedidos()*, *validaCPF()*, *realPagamento()* e *Mostrar()*:
  ```
 elif op == 2:
     while True:
@@ -31,7 +32,7 @@ elif op == 4:
  ```
 ### teste.py
 Este é um arquivo exclusivo para debuging e teste de funções que serão implementadas nos módulos do projeto.   
- * Exemplo do pré código da função vpedidos():
+ * Exemplo do pré código da função *vpedidos()*:
 ```
 a = 'fila.txt' 
 try:
@@ -120,7 +121,7 @@ Recebe uma lista de strings que armazena as opções do programa. Ajuda o usuár
     return o
  ```
 #### Submódulo "tarefas"
-   Esse, por outro lado, cuída das requisições e tarefas que serão executadas pelo sistema. É o maior arquivo python e o que possui mais funções. Também cuida das redundâncias do sistema e sua integração com o *bando de dados*, o qual é simulado pelos arquivos .txt.
+   Esse, por outro lado, cuída das requisições e tarefas que serão executadas pelo sistema. É o maior arquivo python e o que possui mais funções. Também cuida das redundâncias do sistema e sua integração com o *bando de dados*, o qual é simulado pelos arquivos *.txt*.
 ##### 1. calcularCpf()
 Utilizada durante o processo de cadastro de clientes. Essa função recebe um valor que é considerado como cpf e gera um espelho desse que será lido como o cpf verdadeiro. No fim, retorna a lista com ambos os cpf's que será comparada por outra função.
  * Código da Função dentro do módulo "tarefas":
@@ -254,7 +255,7 @@ Define se uma transição será liberada ou não através de um retorno booleano
     arq.close()
  ```
 ##### 5. arquivoExiste()
-Verifica se determinado arquivo existe dentro do projeto. É usado dentro do Main.py para criar os arquivos .txt, caso eles não existão.
+Verifica se determinado arquivo existe dentro do projeto. É usado dentro do Main.py para criar os arquivos *.txt*, caso eles não existão.
  * Código da Função dentro do módulo "tarefas":
  ```
  def arquivoExiste(x):
@@ -285,7 +286,7 @@ if not tarefas.arquivoExiste(cart):
 user = usuarios.Users
  ```
 ##### 6. criar()
-Cria um arquivo .txt de nome selecionável. É usado para criar os arquivos necessários para o projeto funcionar.
+Cria um arquivo *.txt* de nome selecionável. É usado para criar os arquivos necessários para o projeto funcionar.
  * Código da Função dentro do módulo "tarefas":
  ```
  def criar(x):
@@ -309,7 +310,7 @@ if not tarefas.arquivoExiste(arq):
     tarefas.criar(arq)
   ```
 ##### 7. cadastra()
-Função responsável por cadastrar os clientes no sistema. Ela recebe os dados e os insere no arquivo .txt que simula a entidade "cliente".
+Função responsável por cadastrar os clientes no sistema. Ela recebe os dados e os insere no arquivo *.txt* que simula a entidade "cliente".
  * Código da Função dentro do módulo "tarefas":
  ```
  def cadastra(a, c):
@@ -393,7 +394,7 @@ Recebe um pedido feito por um usuário e verifica se ele será aprovado ou negad
         print(f"Erro: {erro}")
  ```
 ##### 11. encontrar_string()
-A partir do nome do arquivo onde a string está e uma parte da string desejada e retorna o index da linha onde esta string se encontra.
+A partir do nome do arquivo onde a string está e uma parte da string desejada e retorna o index da linha onde esta *string* se encontra.
  * Código da Função dentro do módulo "tarefas":
  ```
  def encontrar_string(path,string):
@@ -405,7 +406,7 @@ A partir do nome do arquivo onde a string está e uma parte da string desejada e
     print('String não encontrada')
  ```
 ##### 12. alterar_linha()
-Altera uma linha dentro de um arquivo .txt.
+Altera uma linha dentro de um arquivo *.txt*.
  * Código da Função dentro do módulo "tarefas":
  ```
  def alterar_linha(path,index_linha,nova_linha):
@@ -529,7 +530,7 @@ Esta função imprime na tela um pequeno extrato da conta que contém a moviment
 #### Submódulo "usuario"
    Por fim, esse é responsável por garantir a segurança e o acesso de ambos os tipos de usuário, root e cliente. Possue apenas a classe Users que possue e atributos funções que realizam essas funções.
 ##### Class Users
-Garante que existam dois usuários diferentes utilizando o sistema, o Root, responsável por manter o sistema, e o Cliente, que utiliza o sistema usurfrui de seus benefícios.
+Garante que existam dois usuários diferentes utilizando o sistema, o *Root*, responsável por manter o sistema, e o *Cliente*, que utiliza o sistema usurfrui de seus benefícios.
  * Código dentro do módulo "usuarios":
  ```
  class Users:
