@@ -42,11 +42,6 @@ while True:
                     com = float(input("Valor da Compra: R$ ").replace(',', '.'))
                     tarefas.pedido(fila, com, cat, cpf)
                 elif op == 2:
-                    while True:
-                        cpf = input("CPF: ").replace('.', '').replace('.', '').replace('-', '')
-                        if tarefas.validaCPF(cpf):
-                            break
-                        print("Erro! CPF inválido, por favor digite novamente!")
                     pag = float(input("Pagamento: R$ ").replace(',', '.'))
                     tarefas.realPag(fila, pag, cpf)
                 elif op == 3:
