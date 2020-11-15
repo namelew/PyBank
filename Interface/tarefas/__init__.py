@@ -2,7 +2,7 @@ from Interface.menu import *
 from time import sleep as slp
 
 
-def calculaCpf(x):
+def validaCPF(x):
     """
     -> Recebe um cpf(x) e retorna uma lista com:
     - Espaço 0: CPF(x)
@@ -42,17 +42,7 @@ def calculaCpf(x):
             continue
         else:
             break
-    return valida
-
-
-def validaCPF(y):
-    """
-    -> Recebe um cpf e o joga em CalculaCpf(), depois compara o CPF original com seu espelho e retorna se ele
-    é valida(True) ou não(False)
-    :param y: CPF que vai ser jogado em CalculaCpf()
-    :return: Booleano(True/False)
-    """
-    final = calculaCpf(y)
+    final = valida
     for v in final[1]:
         final[2].append(str(v))
     final[2] = ''.join(final[2])
@@ -183,19 +173,6 @@ def pedido(a, x, t, y):
         titulo("PEDIDO ADICIONADO A FILA")
 
 
-def vpedidos(a, x):
-    try:
-        arq = open(a, 'r')
-        for linha in arq:
-            op = linha.replace("\n", '').split(';')
-            print("-" * 44)
-            print(f"{op[0]:^11}{op[1]:^11}{op[2]:^10}{op[3]:^10}")
-        print("-" * 44)
-        arq.close()
-    except Exception as erro:
-        print(f"Erro: {erro}")
-
-
 def validaPedido(a, x):
     try:
         arq = open(a, 'r+')
@@ -222,7 +199,7 @@ def validaPedido(a, x):
         print(f"Erro: {erro}")
 
 
-def encontrar_string(path,string):
+def encontrar_string(path, string):
     with open(path,'r') as f:
         texto=f.readlines()
     for i in texto:
@@ -231,12 +208,12 @@ def encontrar_string(path,string):
     print('String não encontrada')
 
 
-def alterar_linha(path,index_linha,nova_linha):
-    with open(path,'r') as f:
+def alterar_linha(path, index_linha, nova_linha):
+    with open(path, 'r') as f:
         texto=f.readlines()
-    with open(path,'w') as f:
+    with open(path, 'w') as f:
         for i in texto:
-            if texto.index(i)==index_linha:
+            if texto.index(i) == index_linha:
                 f.write(nova_linha+'\n')
             else:
                 f.write(i)
@@ -307,26 +284,3 @@ def confPag(a, i):
             libSaldo('clientes.txt', i, info[2])
         else:
             print("Pagamento não encontrado!")
-
-
-def listarMovimento(a, idem):
-    arq = open(a, 'r')
-    categoria = []
-    totalcat = []
-    for linha in arq:
-        registro = linha.split(";")
-        if registro[0] == idem:
-            categoria.append(registro[1])
-    for c in range(0, len(categoria)):
-        arq = open(a, 'r')
-        soma = 0
-        for line in arq:
-            mark = line.split(";")
-            if categoria[c] == mark[1] and mark[0] == idem:
-                soma += float(mark[2])
-        totalcat.append(soma)
-        arq.close()
-    titulo("Total Por Categoria", tan=44)
-    for cont in range(0, len(categoria)):
-        print(f"{categoria[cont]:^22} {totalcat[cont]:^22}")
-        print("-" * 44)

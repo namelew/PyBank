@@ -1,3 +1,4 @@
+from Interface.tarefas import *
 cor = (
     #cores que vão ser utilizadas no programa
     '\033[m',  # 0 - sem cor
@@ -71,7 +72,7 @@ def titulo(msg, c=0, tan=0):
     print(cor[0])
 
 
-def linha(tam=42):
+def linha(tam=44):
     """
     -> Retorna uma linha de tamanho selecionável
     :param tam: tamanho da linha(padrão 42)
@@ -95,3 +96,63 @@ def menu(list):
     print(linha())
     o = leiaInt("Opção: ")
     return o
+
+
+def vpedidos(a, x):
+    try:
+        arq = open(a, 'r')
+        for linha in arq:
+            op = linha.replace("\n", '').split(';')
+            if op[0] == str(x):
+                print("-" * 44)
+                print(f"{op[0]:^11}{op[1]:^11}{op[2]:^10}{op[3]:^10}")
+        print("-" * 44)
+        arq.close()
+    except Exception as erro:
+        print(f"Erro: {erro}")
+
+
+def listarMovimento(a, idem):
+    arq = open(a, 'r')
+    categoria = []
+    totalcat = []
+    for linha in arq:
+        registro = linha.split(";")
+        if registro[0] == idem and registro[1] not in categoria:
+            categoria.append(registro[1])
+    for c in range(0, len(categoria)):
+        arq = open(a, 'r')
+        soma = 0
+        for line in arq:
+            mark = line.split(";")
+            if categoria[c] == mark[1] and mark[0] == idem:
+                soma += float(mark[2])
+        totalcat.append(soma)
+        arq.close()
+    titulo("Total Por Categoria", tan=44)
+    for cont in range(0, len(categoria)):
+        print(f"{categoria[cont]:^22} {totalcat[cont]:^22}")
+        print("-" * 44)
+
+
+def Mostrar(arq, cpf):
+    try:
+        itens = {}
+        a = open(arq, 'r')
+        for linha in a:
+            inf = linha.split(';')
+            if inf[2] == cpf:
+                itens['Nome'] = inf[0]
+                itens['Sobrenome'] = inf[1]
+                itens['CPF'] = inf[2]
+                itens['N.Cartão'] = inf[3]
+                itens['Senha'] = inf[4]
+                itens['Limite'] = inf[5]
+                for k, v in itens.items():
+                    print(f"{k}: {v}")
+                itens.clear()
+                break
+    except Exception as erro:
+        print(erro)
+    finally:
+        a.close()
