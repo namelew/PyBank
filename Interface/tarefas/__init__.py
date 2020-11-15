@@ -257,7 +257,7 @@ def redCred(a, x, r):
 
 
 def libSaldo(a, x, ad):
-    contas = open(a,'r+')
+    contas = open(a, 'r+')
     achou = False
     for conta in contas:
         info = conta.split(';')
@@ -298,7 +298,7 @@ def confPag(a, i):
         achou = False
         for reg in arq:
             info = reg.split(';')
-            if info[0] == str(i) and info[3] == 'ESPERA\n':
+            if info[0] == str(i) and info[3] == 'ESPERA':
                 achou = True
                 break
         index = encontrar_string(a, reg)

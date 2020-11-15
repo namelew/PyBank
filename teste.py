@@ -1,28 +1,22 @@
 # arquivo de teste para funções
-from Interface import menu
+from Interface import tarefas
 a = 'fila.txt'
-idem = "03044618223"
+i = "03044618223"
+ad = '2000.0'
 try:
-    arq = open(a, 'r')
-    categoria = []
-    totalcat = []
-    for linha in arq:
-        registro = linha.split(";")
-        if registro[0] == idem:
-            categoria.append(registro[1])
-    for c in range(0, len(categoria)):
-        arq = open(a, 'r')
-        soma = 0
-        for line in arq:
-            mark = line.split(";")
-            if categoria[c] == mark[1]:
-                soma += float(mark[2])
-        totalcat.append(soma)
-        arq.close()
-    menu.titulo("Total de Gasto Por Categoria", tan=44)
-    for cont in range(0, len(categoria)):
-        print(f"{categoria[cont]:^22} {totalcat[cont]:^22}")
-        print(menu.linha(44))
+    with open(a, 'r+') as arq:
+        achou = False
+        for reg in arq:
+            info = reg.split(';')
+            if info[0] == str(i) and info[3] == "ESPERA":
+                achou = True
+                break
+        index = tarefas.encontrar_string(a, reg)
+        if achou:
+            tarefas.alterar_linha(a, index, f'{info[0]};{info[1]};{info[2]};RECEBIDO')
+            tarefas.libSaldo('clientes.txt', i, info[2])
+        else:
+            print("Pagamento não encontrado!")
 except Exception as erro:
     print(f"Ocorreu um erro de {erro} durante a procura do registro")
 finally:
