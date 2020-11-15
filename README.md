@@ -4,12 +4,12 @@ Um pseudo-aplicativo de um aplicativo de um banco escrito em python(A pseudo app
 
 ## Funcionalidades  
 
- * Cadastro de Clientes(Disponível)
- * Solicitação de Compras(Disponível)
- * Realização de Pagamentos(Disponével)
- * Validação de Transações(Disponível)
- * Histórico de Movimentações separado por categorias(Disponível)
- * Interface Gráfica(Indisponível)  
+ * [x] Cadastro de Clientes
+ * [x] Solicitação de Compras
+ * [x] Realização de Pagamentos
+ * [x] Validação de Transações
+ * [x] Histórico de Movimentações separado por categorias
+ * [] Interface Gráfica
 ## Arquivos  
 ### Códigos Python  
    Ao todo foram criados 4 códigos em python que trabalham em conjunto e um arquivo de teste para funções que serão implementadas e correções de bugs. São eles:
@@ -255,7 +255,7 @@ Define se uma transição será liberada ou não através de um retorno booleano
     arq.close()
  ```
 ##### 5. arquivoExiste()
-Verifica se determinado arquivo existe dentro do projeto. É usado dentro do Main.py para criar os arquivos *.txt*, caso eles não existão.
+Verifica se determinado arquivo existe dentro do projeto. É usado dentro do *Main.py* para criar os arquivos *.txt*, caso eles não existão.
  * Código da Função dentro do módulo "tarefas":
  ```
  def arquivoExiste(x):
