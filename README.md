@@ -562,8 +562,28 @@ Esta função lê um valor inteiro, faz tratamento de erros desse valor e retorn
             return entrada
  ```
 ##### leiaFloat()
-L"e um valor decimal, ponto flutuante, e retorna ao sistema esse valor com os devidos tratamentos de erro.
- * Codigo da Funcao dentro do modulo 
+Lê um valor decimal, ponto flutuante, e retorna ao sistema esse valor com os devidos tratamentos de erro.
+ * Código da Funcao dentro do módulo "tarefas":
+```
+def leiaFloat(x):
+    """
+       -> Recebe um valor x e retorna x convertido em decimal. Caso o valor não possa ser convertido
+       a função dará erro e pedirá um novo valor.
+       :param x: valor a ser convertido para decimal
+       :return: retorna o valor decimal
+       """
+    while True:
+        try:
+            entrada = float(input(x).replace(',', '.'))
+        except (ValueError, TypeError):
+            print("\033[0;31mErro! Por favor digite um valor real.\033[m")
+            continue
+        except KeyboardInterrupt:
+            print("\033[0;34mO usuário encerrou a entrada de dados.\033[m")
+            return 0.0
+        else:
+            return entrada
+```
 #### Submódulo "usuario"
    Por fim, esse é responsável por garantir a segurança e o acesso de ambos os tipos de usuário, root e cliente. Possue apenas a classe Users que possue e atributos funções que realizam essas funções.
 ##### Class Users
