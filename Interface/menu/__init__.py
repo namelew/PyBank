@@ -13,44 +13,7 @@ cor = (
 )
 
 
-def leiaInt(x):
-    """
-    -> Recebe um valor x e retorna x convertido em inteiro. Caso o valor não possa ser convertido
-    a função dará erro e pedirá um novo valor.
-    :param x: valor a ser convertido para inteiro
-    :return: retorna o valor inteiro
-    """
-    while True:
-        try:
-            entrada = int(input(x))
-        except (ValueError, TypeError):
-            print("\033[0;31mErro! Por favor digite um valor inteiro.\033[m")
-            continue
-        except KeyboardInterrupt:
-            print("\033[0;34mO usuário encerrou a entrada de dados.\033[m")
-            return 0
-        else:
-            return entrada
 
-
-def leiaFloat(x):
-    """
-       -> Recebe um valor x e retorna x convertido em decimal. Caso o valor não possa ser convertido
-       a função dará erro e pedirá um novo valor.
-       :param x: valor a ser convertido para decimal
-       :return: retorna o valor decimal
-       """
-    while True:
-        try:
-            entrada = float(input(x).replace(',', '.'))
-        except (ValueError, TypeError):
-            print("\033[0;31mErro! Por favor digite um valor real.\033[m")
-            continue
-        except KeyboardInterrupt:
-            print("\033[0;34mO usuário encerrou a entrada de dados.\033[m")
-            return 0.0
-        else:
-            return entrada
 
 
 def titulo(msg, c=0, tan=0):

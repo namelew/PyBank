@@ -45,16 +45,16 @@ while True:
                     menu.titulo('NOVO PEDIDO', 6, 44)
                     print("- Se o valor da compra for 0 ou nulo, a ope_\nração será cancelada.")
                     cat = input("Categoria: ").upper().strip()
-                    com = input("Valor da Compra: R$ ").replace(',', '.')
-                    if com == '0.0' or com == '':
+                    com = tarefas.leiaFloat("Valor da Compra: R$ ")
+                    if com == 0.0:
                         menu.titulo("OPERAÇÃO CANCELADA", 2, 44)
                     else:
                         tarefas.pedido(fila, com, cat, cpf)
                 elif op == 2:
                     menu.titulo('REAZLIZANDO PAGAMENTO', 6, 44)
                     print("- Se o valor do depósito for 0 ou nulo, a\noperação será cancelada.")
-                    pag = input("Valor: R$ ").replace(',', '.')
-                    if pag == '0.0' or pag == '':
+                    pag = tarefas.leiaFloat("Valor: R$ ")
+                    if pag == 0.0:
                         menu.titulo("OPERAÇÃO CANCELADA", 2, 44)
                     else:
                         tarefas.realPag(fila, pag, cpf)
