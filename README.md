@@ -538,6 +538,32 @@ Confirma que o pagamento foi realizado e muda seu estado para "aceito".
         else:
             print("Pagamento não encontrado!")
  ```
+##### leiaInt()
+Esta função lê um valor inteiro, faz tratamento de erros desse valor e retorna o valor ao sistema.
+ * Código da Função dentro do módulo "tarefas":
+ ```
+ def leiaInt(x):
+    """
+    -> Recebe um valor x e retorna x convertido em inteiro. Caso o valor não possa ser convertido
+    a função dará erro e pedirá um novo valor.
+    :param x: valor a ser convertido para inteiro
+    :return: retorna o valor inteiro
+    """
+    while True:
+        try:
+            entrada = int(input(x))
+        except (ValueError, TypeError):
+            print("\033[0;31mErro! Por favor digite um valor inteiro.\033[m")
+            continue
+        except KeyboardInterrupt:
+            print("\033[0;34mO usuário encerrou a entrada de dados.\033[m")
+            return 0
+        else:
+            return entrada
+ ```
+##### leiaFloat()
+L"e um valor decimal, ponto flutuante, e retorna ao sistema esse valor com os devidos tratamentos de erro.
+ * Codigo da Funcao dentro do modulo 
 #### Submódulo "usuario"
    Por fim, esse é responsável por garantir a segurança e o acesso de ambos os tipos de usuário, root e cliente. Possue apenas a classe Users que possue e atributos funções que realizam essas funções.
 ##### Class Users
