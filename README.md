@@ -538,7 +538,7 @@ Confirma que o pagamento foi realizado e muda seu estado para "aceito".
         else:
             print("Pagamento não encontrado!")
  ```
-##### 15.leiaInt()
+##### 16. leiaInt()
 Esta função lê um valor inteiro, faz tratamento de erros desse valor e retorna o valor ao sistema.
  * Código da Função dentro do módulo "tarefas":
  ```
@@ -561,7 +561,7 @@ Esta função lê um valor inteiro, faz tratamento de erros desse valor e retorn
         else:
             return entrada
  ```
-##### 16.leiaFloat()
+##### 17. leiaFloat()
 Lê um valor decimal, ponto flutuante, e retorna ao sistema esse valor com os devidos tratamentos de erro.
  * Código da Funcao dentro do módulo "tarefas":
 ```
