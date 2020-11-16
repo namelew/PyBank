@@ -119,13 +119,80 @@ Recebe uma lista de strings que armazena as opções do programa. Ajuda o usuár
     o = leiaInt("Opção: ")
     return o
  ```
+ ##### 4. vpedidos()
+Abre uma tabela que mostra ao usuário, o identificador da movimentação, a sua categoria, o valor da movimentação e o seu estado atual.
+ * Código da Função no módulo "menu":
+ ```
+ def pedido(a, x, t, y):
+    try:
+        arq = open(a, 'a')
+        arq.write(f"{y};{t};{x};EM ANALISE\n")
+    except Exception as erro:
+        print(f"Erro: {erro}")
+    else:
+        titulo("PEDIDO ADICIONADO A FILA")
+    finally:
+        arq.close()
+ ```
+ ##### 5. listarMovimento():
+Esta função imprime na tela um pequeno extrato da conta que contém a movimentação total por categoria.
+ * Código da Função dentro do módulo "menu":
+ ```
+ def listarMovimento(a, idem):
+    arq = open(a, 'r')
+    categoria = []
+    totalcat = []
+    for linha in arq:
+        registro = linha.split(";")
+        if registro[0] == idem:
+            categoria.append(registro[1])
+    for c in range(0, len(categoria)):
+        arq = open(a, 'r')
+        soma = 0
+        for line in arq:
+            mark = line.split(";")
+            if categoria[c] == mark[1] and mark[0] == idem:
+                soma += float(mark[2])
+        totalcat.append(soma)
+        arq.close()
+    titulo("Total Por Categoria", tan=44)
+    for cont in range(0, len(categoria)):
+        print(f"{categoria[cont]:^22} {totalcat[cont]:^22}")
+        print("-" * 44)
+ ```
+ ##### 6. Mostrar():
+ Essa função monstra ao usuário seus dados da conta, como nome, sobrenome etc, de forma ordenada e limpa.
+  * Código da Função dentro do módulo "menu":
+  ```
+  def Mostrar(arq, cpf):
+    try:
+        itens = {}
+        a = open(arq, 'r')
+        for linha in a:
+            inf = linha.split(';')
+            if inf[2] == cpf:
+                itens['Nome'] = inf[0]
+                itens['Sobrenome'] = inf[1]
+                itens['CPF'] = inf[2]
+                itens['N.Cartão'] = inf[3]
+                itens['Senha'] = inf[4]
+                itens['Limite'] = inf[5]
+                for k, v in itens.items():
+                    print(f"{k}: {v}")
+                itens.clear()
+                break
+    except Exception as erro:
+        print(erro)
+    finally:
+        a.close()
+  ```
 #### Submódulo "tarefas"
    Esse, por outro lado, cuída das requisições e tarefas que serão executadas pelo sistema. É o maior arquivo python e o que possui mais funções. Também cuida das redundâncias do sistema e sua integração com o *bando de dados*, o qual é simulado pelos arquivos *.txt*.
-##### 1. calcularCpf()
-Utilizada durante o processo de cadastro de clientes. Essa função recebe um valor que é considerado como cpf e gera um espelho desse que será lido como o cpf verdadeiro. No fim, retorna a lista com ambos os cpf's que será comparada por outra função.
+##### 1. validaCPF()
+Recebe um valor que é identificado como cpf, calcula um espelho do cpf que será utilizando para comparação e retorna um valor booleano referente ao caso do cpf ser válido ou não.
  * Código da Função dentro do módulo "tarefas":
  ```
- def calculaCpf(x):
+def validaCPF(x):
     """
     -> Recebe um cpf(x) e retorna uma lista com:
     - Espaço 0: CPF(x)
@@ -134,7 +201,6 @@ Utilizada durante o processo de cadastro de clientes. Essa função recebe um va
     :param x: cpf digitado
     :return: lista com 3 sublistas
     """
-    import re
     valida = [[], [], []]
     while True:
         try:
@@ -154,7 +220,7 @@ Utilizada durante o processo de cadastro de clientes. Essa função recebe um va
                 resto = soma % 11
                 if resto < 2:
                     digi = 0
-                else:o
+                else:
                     digi = 11 - resto
                 valida[1].append(digi)
                 valida[2].clear()
@@ -166,20 +232,7 @@ Utilizada durante o processo de cadastro de clientes. Essa função recebe um va
             continue
         else:
             break
-    return valida
- ```
-##### 2. validaCPF()
-Recebe um valor que é identificado como cpf e retorna um valor booleano referente ao caso do cpf ser válido ou não.
- * Código da Função dentro do módulo de "tarefas":
- ```
- def validaCPF(y):
-    """
-    -> Recebe um cpf e o joga em CalculaCpf(), depois compara o CPF original com seu espelho e retorna se ele
-    é valida(True) ou não(False)
-    :param y: CPF que vai ser jogado em CalculaCpf()
-    :return: Booleano(True/False)
-    """
-    final = calculaCpf(y)
+    final = valida
     for v in final[1]:
         final[2].append(str(v))
     final[2] = ''.join(final[2])
@@ -188,7 +241,7 @@ Recebe um valor que é identificado como cpf e retorna um valor booleano referen
     else:
         return False
  ```
-##### 3. findCliente()
+##### 2. findCliente()
 Determina se um cliente existe ou não dentro do banco, buscando ele pelo cpf, ou o número do cartão, e a sua senha.
  * Código da Função dentro do módulo "tarefas":
  ```
@@ -231,7 +284,7 @@ Determina se um cliente existe ou não dentro do banco, buscando ele pelo cpf, o
     finally:
         arq.close()
  ```
-##### 4. validaTrans()
+##### 3. validaTrans()
 Define se uma transição será liberada ou não através de um retorno booleano.
  * Código da Função dentro do módulo "tarefas":
  ```
@@ -253,7 +306,7 @@ Define se uma transição será liberada ou não através de um retorno booleano
         return False
     arq.close()
  ```
-##### 5. arquivoExiste()
+##### 4. arquivoExiste()
 Verifica se determinado arquivo existe dentro do projeto. É usado dentro do *Main.py* para criar os arquivos *.txt*, caso eles não existão.
  * Código da Função dentro do módulo "tarefas":
  ```
@@ -284,7 +337,7 @@ if not tarefas.arquivoExiste(cart):
     tarefas.criar(cart)
 user = usuarios.Users
  ```
-##### 6. criar()
+##### 5. criar()
 Cria um arquivo *.txt* de nome selecionável. É usado para criar os arquivos necessários para o projeto funcionar.
  * Código da Função dentro do módulo "tarefas":
  ```
@@ -308,7 +361,7 @@ arq = "clientes.txt"
 if not tarefas.arquivoExiste(arq):
     tarefas.criar(arq)
   ```
-##### 7. cadastra()
+##### 6. cadastra()
 Função responsável por cadastrar os clientes no sistema. Ela recebe os dados e os insere no arquivo *.txt* que simula a entidade "cliente".
  * Código da Função dentro do módulo "tarefas":
  ```
@@ -333,7 +386,7 @@ Função responsável por cadastrar os clientes no sistema. Ela recebe os dados 
         finally:
             arq.close()
  ```
-##### 8. pedido()
+##### 7. pedido()
 Cria um pedido e o insere na entidade "fila", onde ficam salvos todas as movimentações feitas no sistema.
  * Código da Função do módulo "tarefas":
  ```
@@ -348,24 +401,9 @@ Cria um pedido e o insere na entidade "fila", onde ficam salvos todas as movimen
     finally:
         arq.close()
  ```
-##### 9. vpedidos()
-Abre uma tabela que mostra ao usuário, o identificador da movimentação, a sua categoria, o valor da movimentação e o seu estado atual.
- * Código da Função no módulo "tarefas":
- ```
- def pedido(a, x, t, y):
-    try:
-        arq = open(a, 'a')
-        arq.write(f"{y};{t};{x};EM ANALISE\n")
-    except Exception as erro:
-        print(f"Erro: {erro}")
-    else:
-        titulo("PEDIDO ADICIONADO A FILA")
-    finally:
-        arq.close()
- ```
-##### 10. validaPedido()
+##### 8. validaPedido()
 Recebe um pedido feito por um usuário e verifica se ele será aprovado ou negado.
- * Código da Função dentro do módulo "Tarefas":
+ * Código da Função dentro do módulo "tarefas":
  ```
  def validaPedido(a, x):
     try:
@@ -392,7 +430,7 @@ Recebe um pedido feito por um usuário e verifica se ele será aprovado ou negad
     except Exception as erro:
         print(f"Erro: {erro}")
  ```
-##### 11. encontrar_string()
+##### 9. encontrar_string()
 A partir do nome do arquivo onde a string está e uma parte da string desejada e retorna o index da linha onde esta *string* se encontra.
  * Código da Função dentro do módulo "tarefas":
  ```
@@ -404,7 +442,7 @@ A partir do nome do arquivo onde a string está e uma parte da string desejada e
             return texto.index(i)
     print('String não encontrada')
  ```
-##### 12. alterar_linha()
+##### 10. alterar_linha()
 Altera uma linha dentro de um arquivo *.txt*.
  * Código da Função dentro do módulo "tarefas":
  ```
@@ -418,7 +456,7 @@ Altera uma linha dentro de um arquivo *.txt*.
             else:
                 f.write(i)
  ```
-##### 13. redCred()
+##### 11. redCred()
 Após o fim e liberação do pedido, reduz do crédito da conta o valor do pedido.
  * Código da Função dentro do módulo "tarefas":
  ```
@@ -435,7 +473,7 @@ Após o fim e liberação do pedido, reduz do crédito da conta o valor do pedid
     alterar_linha(a, index, f"{info[0]};{info[1]};{info[2]};{info[3]};{info[4]};{ns}")
     contas.close()
  ```
-##### 14. libSaldo()
+##### 12. libSaldo()
 Após a confirmação do pagamento, soma ao limite de credito o valor que foi computado no registro de pagamento.
  * Código da Função dentro do módulo "tarefas":
  ```
@@ -453,7 +491,7 @@ Após a confirmação do pagamento, soma ao limite de credito o valor que foi co
     print(f"Operação Finalizada! Adicionado mais R$ {float(ad):.2f} a conta de {info[0]} {info[1]}!")
     contas.close()
  ```
-##### 15. verifCart()
+##### 13. verifCart()
 Verifica se determinado cartão existe dentro da entidade "cartão", caso não exista, este adicionara ao número do cartão aos registros da entidade.
  * Código da Função dentro do módulo "tarefas":
  ```
@@ -472,7 +510,7 @@ Verifica se determinado cartão existe dentro da entidade "cartão", caso não e
             arq.write(str(x)+'\n')
         return True
  ```
-##### 16. realPag()
+##### 14. realPag()
 Faz uma requisição de pagamento, adicionado esta a entidade "fila".
  * Código da Função dentro do módulo "tarefas":
  ```
@@ -481,7 +519,7 @@ Faz uma requisição de pagamento, adicionado esta a entidade "fila".
         arq.write(f'{i};PAGAMENTO;{x};ESPERA')
     print("Pagamento Realizado! Esperando confirmação.")
  ```
-##### 17. confPag()
+##### 15. confPag()
 Confirma que o pagamento foi realizado e muda seu estado para "aceito".
  * Código da Função dentro do módulo "tarefas":
  ```
@@ -499,32 +537,6 @@ Confirma que o pagamento foi realizado e muda seu estado para "aceito".
             libSaldo('clientes.txt', i, info[2])
         else:
             print("Pagamento não encontrado!")
- ```
-##### 18. listarMovimento():
-Esta função imprime na tela um pequeno extrato da conta que contém a movimentação total por categoria.
- * Código da Função dentro do módulo "tarefas":
- ```
- def listarMovimento(a, idem):
-    arq = open(a, 'r')
-    categoria = []
-    totalcat = []
-    for linha in arq:
-        registro = linha.split(";")
-        if registro[0] == idem:
-            categoria.append(registro[1])
-    for c in range(0, len(categoria)):
-        arq = open(a, 'r')
-        soma = 0
-        for line in arq:
-            mark = line.split(";")
-            if categoria[c] == mark[1] and mark[0] == idem:
-                soma += float(mark[2])
-        totalcat.append(soma)
-        arq.close()
-    titulo("Total Por Categoria", tan=44)
-    for cont in range(0, len(categoria)):
-        print(f"{categoria[cont]:^22} {totalcat[cont]:^22}")
-        print("-" * 44)
  ```
 #### Submódulo "usuario"
    Por fim, esse é responsável por garantir a segurança e o acesso de ambos os tipos de usuário, root e cliente. Possue apenas a classe Users que possue e atributos funções que realizam essas funções.
