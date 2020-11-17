@@ -103,8 +103,8 @@ while True:
                         if tarefas.verifCart(cart, cliente.ncar):
                             break
                         print("Número já existente! Por favor, digite novamente!")
-                    cliente.senha = menu.leiaInt("Senha(6 Digitos): ")
-                    cliente.limite = menu.leiaFloat("Limite de Crédito: R$ ")
+                    cliente.senha = tarefas.leiaInt("Senha(6 Digitos): ")
+                    cliente.limite = tarefas.leiaFloat("Limite de Crédito: R$ ")
                     tarefas.cadastra(arq, cliente)
                     sleep(1)
                 elif op == 2:

@@ -1,5 +1,4 @@
-from Interface.menu import *
-from time import sleep as slp
+from Interface import menu
 
 
 def validaCPF(x):
@@ -135,9 +134,9 @@ def criar(x):
         a = open(x, 'wt+')
         a.close()
     except:
-        print(f"{cor[2]}Houve um erro na criação do arquivo!{cor[[0]]}")
+        print(f"{menu.cor[2]}Houve um erro na criação do arquivo!{menu.cor[0]}")
     else:
-        print(f"{cor[4]}Arquivo {a} criado com sucesso!{cor[0]}")
+        print(f"{menu.cor[4]}Arquivo {a} criado com sucesso!{menu.cor[0]}")
 
 
 def cadastra(a, c):
@@ -150,14 +149,14 @@ def cadastra(a, c):
     try:
         arq = open(a, 'a')
     except:
-        print(f"{cor[2]}Houve um erro durante a execução do arquivo!{cor[0]}")
+        print(f"{menu.cor[2]}Houve um erro durante a execução do arquivo!{menu.cor[0]}")
     else:
         try:
             arq.write(f"{c.nome};{c.sobre};{c.cpf};{c.ncar};{c.senha};{c.limite}\n")
         except Exception as erro:
-            print(f"{cor[2]}Houve um erro de {erro} durante a inscrição dos dados!{cor[0]}")
+            print(f"{menu.cor[2]}Houve um erro de {erro} durante a inscrição dos dados!{menu.cor[0]}")
         else:
-            titulo(f"{c.nome.upper()} {c.sobre.upper()} ADICIONADO AOS REGISTROS", c=5)
+            menu.titulo(f"{c.nome.upper()} {c.sobre.upper()} ADICIONADO AOS REGISTROS", c=5)
         finally:
             arq.close()
 
@@ -170,7 +169,7 @@ def pedido(a, x, t, y):
     except Exception as erro:
         print(f"Erro: {erro}")
     else:
-        titulo("PEDIDO ADICIONADO A FILA")
+        menu.titulo("PEDIDO ADICIONADO A FILA")
 
 
 def validaPedido(a, x):
@@ -200,8 +199,8 @@ def validaPedido(a, x):
 
 
 def encontrar_string(path, string):
-    with open(path,'r') as f:
-        texto=f.readlines()
+    with open(path, 'r') as f:
+        texto = f.readlines()
     for i in texto:
         if string in i:
             return texto.index(i)
@@ -210,7 +209,7 @@ def encontrar_string(path, string):
 
 def alterar_linha(path, index_linha, nova_linha):
     with open(path, 'r') as f:
-        texto=f.readlines()
+        texto = f.readlines()
     with open(path, 'w') as f:
         for i in texto:
             if texto.index(i) == index_linha:

@@ -1,4 +1,5 @@
 from Interface.tarefas import *
+from time import sleep as slp
 cor = (
     #cores que vão ser utilizadas no programa
     '\033[m',  # 0 - sem cor
@@ -11,9 +12,6 @@ cor = (
     '\033[1;36m',  # 7 - magenta
     '\033[1;37m'  # 8 - cinza
 )
-
-
-
 
 
 def titulo(msg, c=0, tan=0):
@@ -73,6 +71,8 @@ def vpedidos(a, x):
         arq.close()
     except Exception as erro:
         print(f"Erro: {erro}")
+    finally:
+        slp(1)
 
 
 def listarMovimento(a, idem):
@@ -96,6 +96,7 @@ def listarMovimento(a, idem):
     for cont in range(0, len(categoria)):
         print(f"{categoria[cont]:^22} {totalcat[cont]:^22}")
         print("-" * 44)
+    slp(1)
 
 
 def Mostrar(arq, cpf):
@@ -113,9 +114,11 @@ def Mostrar(arq, cpf):
                 itens['Limite'] = inf[5]
                 for k, v in itens.items():
                     print(f"{k}: {v}")
+                    slp(0.5)
                 itens.clear()
                 break
     except Exception as erro:
         print(erro)
     finally:
         a.close()
+        slp(1)
