@@ -157,7 +157,7 @@ def cadastra(a, c):
         try:
             arq.write(f"{c.nome};{c.sobre};{c.cpf};{c.ncar};{c.senha};{c.limite}\n")
         except Exception as erro:
-            print(f"{menu.cor[2]}Houve um erro de {erro} durante a inscrição dos dados!{menu.cor[0]}")
+            print(f"{menu.cor[2]}Houve um erro de {erro.__class__} durante a inscrição dos dados!{menu.cor[0]}")
         else:
             menu.titulo(f"{c.nome.upper()} {c.sobre.upper()} ADICIONADO AOS REGISTROS", c=5)
         finally:
