@@ -81,8 +81,8 @@ def findCliente(a, x, y=0, z=0):
                 if achou:
                     break
         arq.close()
-    except Exception as erro:
-        print(f"Ocorreu um erro de {erro} durante a procura do registro")
+    except:
+        menu.titulo("ERRO DURANTE A BUSCA DE REGISTRO", 2, 44)
     else:
         if achou:
             return True
@@ -90,20 +90,23 @@ def findCliente(a, x, y=0, z=0):
             return False
 
 
-def validaTrans(i, x):
+def validaTrans(idem, x=0):
     """
     -> Recebe o valor da transação e imprime na tela se ela estará liberada ou não
     :param x: valor em reais da trasação
+    :param idem: localizador do cliente
     :return: none
     """
     arq = open('clientes.txt', 'r')
     for linha in arq:
         reg = linha.split(";")
-        if reg[2] == str(i):
+        if reg[2] == str(idem):
             break
     valor = float(x)
     arq.close()
-    if valor <= float(reg[5].replace('\n', '')):
+    if valor == 0.0:
+        return False
+    elif valor <= float(reg[5].replace('\n', '')):
         return True
     else:
         return False
@@ -166,8 +169,8 @@ def pedido(a, x, t, y):
         arq = open(a, 'a')
         arq.write(f"{y};{t};{x};EM ANALISE\n")
         arq.close()
-    except Exception as erro:
-        print(f"Erro: {erro}")
+    except:
+        menu.titulo("ERRO DURANTE A EMISSÃO DO PEDIDO", 2, 44)
     else:
         menu.titulo("PEDIDO ADICIONADO A FILA")
 
@@ -182,24 +185,24 @@ def validaPedido(a, x):
                 achou = True
                 break
         string = ";".join(ped)
-        index = encontrar_string(a, string)
+        index = encontrarString(a, string)
         if achou:
             if validaTrans(str(x), ped[2]):
-                alterar_linha(a, index, f"{ped[0]};{ped[1]};{ped[2]};APROVADO\n")
+                alterarLinha(a, index, f"{ped[0]};{ped[1]};{ped[2]};APROVADO\n")
                 print(f"Operação Finalizada! O pedido foi APROVADO!")
                 redCred("clientes.txt", ped[0], ped[2])
             else:
-                alterar_linha(a, index, f"{ped[0]};{ped[1]};{ped[2]};NEGADO\n")
+                alterarLinha(a, index, f"{ped[0]};{ped[1]};{ped[2]};NEGADO\n")
                 print(f"Operação Finalizada! O pedido foi NEGADO!")
         else:
             print("Pedido não encontrado")
         arq.close()
-    except Exception as erro:
-        print(f"Erro: {erro}")
+    except:
+        menu.titulo("ERRO DURANTE A VALIDAÇÃO DO PEDIDO", 2, 44)
 
 
-def encontrar_string(path, string):
-    with open(path, 'r') as f:
+def encontrarString(a, string):
+    with open(a, 'r') as f:
         texto = f.readlines()
     for i in texto:
         if string in i:
@@ -207,12 +210,12 @@ def encontrar_string(path, string):
     print('String não encontrada')
 
 
-def alterar_linha(path, index_linha, nova_linha):
-    with open(path, 'r') as f:
+def alterarLinha(a, index, nova_linha):
+    with open(a, 'r') as f:
         texto = f.readlines()
-    with open(path, 'w') as f:
+    with open(a, 'w') as f:
         for i in texto:
-            if texto.index(i) == index_linha:
+            if texto.index(i) == index:
                 f.write(nova_linha+'\n')
             else:
                 f.write(i)
@@ -221,14 +224,14 @@ def alterar_linha(path, index_linha, nova_linha):
 def redCred(a, x, r):
     contas = open(a, 'r+')
     achou = False
-    index = encontrar_string(a, x)
+    index = encontrarString(a, x)
     for conta in contas:
         info = conta.split(";")
         if info[2] == str(x):
             achou = True
             break
     ns = float(info[5]) - float(r)
-    alterar_linha(a, index, f"{info[0]};{info[1]};{info[2]};{info[3]};{info[4]};{ns}")
+    alterarLinha(a, index, f"{info[0]};{info[1]};{info[2]};{info[3]};{info[4]};{ns}")
     contas.close()
 
 
@@ -240,9 +243,9 @@ def libSaldo(a, x, ad):
         if info[2] == str(x):
             achou = True
             break
-    index = encontrar_string(a, conta)
+    index = encontrarString(a, conta)
     novosd = float(info[5]) + float(ad)
-    alterar_linha(a, index, f"{info[0]};{info[1]};{info[2]};{info[3]};{info[4]};{novosd}")
+    alterarLinha(a, index, f"{info[0]};{info[1]};{info[2]};{info[3]};{info[4]};{novosd}")
     print(f"Operação Finalizada! Adicionado mais R$ {float(ad):.2f} a conta de {info[0]} {info[1]}!")
     contas.close()
 
@@ -264,9 +267,12 @@ def verifCart(a, x):
 
 
 def realPag(a, x, i):
-    with open(a, 'a') as arq:
-        arq.write(f'{i};PAGAMENTO;{x};ESPERA')
-    print("Pagamento Realizado! Esperando confirmação.")
+    try:
+        with open(a, 'a') as arq:
+            arq.write(f'{i};PAGAMENTO;{x};ESPERA')
+        print("Pagamento Realizado! Esperando confirmação.")
+    except:
+        menu.titulo("ERRO DURANTE A COMPUTAÇÃO DO PAGAMENTO", 2, 44)
 
 
 def confPag(a, i):
@@ -277,9 +283,9 @@ def confPag(a, i):
             if info[0] == str(i) and info[3] == 'ESPERA':
                 achou = True
                 break
-        index = encontrar_string(a, reg)
+        index = encontrarString(a, reg)
         if achou:
-            alterar_linha(a, index, f'{info[0]};{info[1]};{info[2]};RECEBIDO')
+            alterarLinha(a, index, f'{info[0]};{info[1]};{info[2]};RECEBIDO')
             libSaldo('clientes.txt', i, info[2])
         else:
             print("Pagamento não encontrado!")
