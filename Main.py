@@ -21,7 +21,11 @@ if not tarefas.arquivoExiste(arq):
 cart = "cartoes.txt"
 if not tarefas.arquivoExiste(cart):
     tarefas.criar(cart)
+
 user = usuarios.Users
+cliente = tarefas.Cliente(arq)
+movimento = tarefas.Movimentos(fila)
+
 while True:
     menu.titulo('PyBANK', 6, 44)
     sleep(1)
@@ -34,7 +38,7 @@ while True:
                 break
             print("Erro! CPF inválido, por favor digite novamente!")
         s = input("Senha: ")
-        if tarefas.findCliente(arq, cpf, s, z=0):
+        if cliente.findCliente(cpf, s, z=0):
             while True:
                 op = menu.menu(['Novo Pedido',
                                 "Realizar Pagamento",
@@ -49,7 +53,7 @@ while True:
                     if com == 0.0:
                         menu.titulo("OPERAÇÃO CANCELADA", 2, 44)
                     else:
-                        tarefas.pedido(fila, com, cat, cpf)
+                        movimento.pedido(com, cat, cpf)
                 elif op == 2:
                     menu.titulo('REAZLIZANDO PAGAMENTO', 6, 44)
                     print("- Se o valor do depósito for 0 ou nulo, a\noperação será cancelada.")
@@ -57,7 +61,7 @@ while True:
                     if pag == 0.0:
                         menu.titulo("OPERAÇÃO CANCELADA", 2, 44)
                     else:
-                        tarefas.realPag(fila, pag, cpf)
+                        movimento.realPag(pag, cpf)
                 elif op == 3:
                     menu.titulo('INFORMAÇÕES DA CONTA', 6, 44)
                     menu.Mostrar(arq, cpf)
@@ -89,23 +93,23 @@ while True:
             while True:
                 op = menu.menu(['Cadastrar novo cliente', 'Validar operação de crédito', 'Validar Pagamento', 'Fechar'])
                 if op == 1:
-                    cliente = Cliente
+                    cadastro = Cliente
                     menu.titulo('CADASTRO DE USUÁRIO', 6, 44)
-                    cliente.nome = input("Nome: ")
-                    cliente.sobre = input("Sobrenome(Ultimo Nome): ")
+                    cadastro.nome = input("Nome: ")
+                    cadastro.sobre = input("Sobrenome(Ultimo Nome): ")
                     while True:
-                        cliente.cpf = input("CPF: ").replace('.', '').replace('.', '').replace('-', '')
-                        if tarefas.validaCPF(cliente.cpf):
+                        cadastro.cpf = input("CPF: ").replace('.', '').replace('.', '').replace('-', '')
+                        if tarefas.validaCPF(cadastro.cpf):
                             break
                         print("Erro! CPF inválido, por favor digite novamente!")
                     while True:
-                        cliente.ncar = menu.leiaInt("Número do Cartão: ")
-                        if tarefas.verifCart(cart, cliente.ncar):
+                        cadastro.ncar = menu.leiaInt("Número do Cartão: ")
+                        if tarefas.verifCart(cart, cadastro.ncar):
                             break
                         print("Número já existente! Por favor, digite novamente!")
-                    cliente.senha = tarefas.leiaInt("Senha(6 Digitos): ")
-                    cliente.limite = tarefas.leiaFloat("Limite de Crédito: R$ ")
-                    tarefas.cadastra(arq, cliente)
+                    cadastro.senha = tarefas.leiaInt("Senha(6 Digitos): ")
+                    cadastro.limite = tarefas.leiaFloat("Limite de Crédito: R$ ")
+                    cliente.cadastra(cadastro)
                     sleep(1)
                 elif op == 2:
                     menu.titulo('VALIDAÇÃO DE PEDIDO', 6, 44)
@@ -114,7 +118,7 @@ while True:
                         if tarefas.validaCPF(cpf):
                             break
                         print("Erro! CPF inválido, por favor digite novamente!")
-                    tarefas.validaPedido(fila, cpf)
+                    movimento.validaPedido(cpf)
                     sleep(1)
                 elif op == 3:
                     menu.titulo('CONFIRMAÇÃO DE PAGAMENTO', 6, 44)
@@ -123,7 +127,7 @@ while True:
                         if tarefas.validaCPF(cpf):
                             break
                         print("Erro! CPF inválido, por favor digite novamente!")
-                    tarefas.confPag(fila, cpf)
+                    movimento.confPag(cpf)
                 elif op == 4 or op == 0:
                     break
                 else:
