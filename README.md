@@ -29,6 +29,19 @@ elif op == 3:
 elif op == 4:
     tarefas.vpedidos(fila, cpf)
  ```
+#### Class Cadastro:
+Esta classe está contida dentro de *Main.py* e funciona como uma struct de cadastro que possui os atributos: *nome*, *sobrenome*, *cpf*, *ncar*, *senha*, *limite*.
+   * código da classe dentro do arquivo *Main.py*:
+```
+class Cadastro:
+   def __init__(self, nome, sobre, cpf, ncar, senha, limite):
+      self.nome = nome
+      self.sobre = sobre
+      self.cpf = cpf
+      self.ncar = ncar
+      self.senha = senha
+      self.limite = limite
+   ```
 ### teste.py
 Este é um arquivo exclusivo para debuging e teste de funções que serão implementadas nos módulos do projeto.   
  * Exemplo do pré código da função *vpedidos()*:
