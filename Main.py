@@ -2,7 +2,7 @@ from Interface import menu, tarefas, usuarios
 from time import sleep
 
 
-class Cliente:
+class Cadastro:
     def __init__(self, nome, sobre, cpf, ncar, senha, limite):
         self.nome = nome
         self.sobre = sobre
@@ -93,7 +93,7 @@ while True:
             while True:
                 op = menu.menu(['Cadastrar novo cliente', 'Validar operação de crédito', 'Validar Pagamento', 'Fechar'])
                 if op == 1:
-                    cadastro = Cliente
+                    cadastro = Cadastro
                     menu.titulo('CADASTRO DE USUÁRIO', 6, 44)
                     cadastro.nome = input("Nome: ")
                     cadastro.sobre = input("Sobrenome(Ultimo Nome): ")

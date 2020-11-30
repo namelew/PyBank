@@ -128,6 +128,15 @@ class Movimentos:
             arq.close()
         except:
             menu.titulo("ERRO DURANTE A VALIDAÇÃO DO PEDIDO", 2, 44)
+
+    def realPag(self, x, i):
+        try:
+            with open(self.a, 'a') as arq:
+                arq.write(f'{i};PAGAMENTO;{x};ESPERA')
+            print("Pagamento Realizado! Esperando confirmação.")
+        except:
+            menu.titulo("ERRO DURANTE A COMPUTAÇÃO DO PAGAMENTO", 2, 44)
+
     def confPag(self, i):
         with open(self.a, 'r+') as arq:
             achou = False
@@ -143,14 +152,6 @@ class Movimentos:
                 cliente.libSaldo(i, info[2])
             else:
                 print("Pagamento não encontrado!")
-
-    def realPag(self, x, i):
-        try:
-            with open(self.a, 'a') as arq:
-                arq.write(f'{i};PAGAMENTO;{x};ESPERA')
-            print("Pagamento Realizado! Esperando confirmação.")
-        except:
-            menu.titulo("ERRO DURANTE A COMPUTAÇÃO DO PAGAMENTO", 2, 44)
 
 def validaCPF(x):
     """
