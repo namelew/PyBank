@@ -96,7 +96,7 @@ class Movimentos:
     def pedido(self, x, t, y):
         try:
             arq = open(self.a, 'a')
-            arq.write(f"{y};{t};{x};EM ANALISE\n")
+            arq.write(f"{y};{t};{x};EM ANALISE")
             arq.close()
         except:
             menu.titulo("ERRO DURANTE A EMISSÃO DO PEDIDO", 2, 44)
@@ -109,8 +109,8 @@ class Movimentos:
             achou = False
             cliente = Cliente('clientes.txt')
             for linha in arq:
-                ped = linha.split(';')
-                if str(x) == ped[0] and ped[3] == "EM ANALISE\n":
+                ped = linha.replace('\n', '').split(';')
+                if str(x) == ped[0] and ped[3] == "EM ANALISE":
                     achou = True
                     break
             string = ";".join(ped)
@@ -142,7 +142,7 @@ class Movimentos:
             achou = False
             cliente = Cliente('clientes.txt')
             for reg in arq:
-                info = reg.split(';')
+                info = reg.replace('\n', '').split(';')
                 if info[0] == str(i) and info[3] == 'ESPERA':
                     achou = True
                     break
