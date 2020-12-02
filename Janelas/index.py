@@ -1,4 +1,5 @@
 import tkinter
+from Interface import usuarios
 
 
 def centralizar(master, coord):
@@ -16,16 +17,24 @@ def centralizar(master, coord):
 banco = tkinter.Tk()
 banco['bg'] = 'black'
 banco.title("PyBank")
-banco.geometry("200x100+"+centralizar(banco, [200,50]))
+banco.geometry("200x100+"+centralizar(banco, [200, 50]))
 banco.resizable(False, False)
 
-user = tkinter.Label(banco, text='Usuário', bg = 'black', fg='green', font = 'Times 10')
+user = tkinter.Label(banco, text='Usuário', bg='black', fg='green', font='Times 10')
 escolha_user = tkinter.Spinbox(banco, values=('Root', 'Cliente'), wrap=True, bg='black', fg='green', font = 'Times 10')
-login = tkinter.Button(banco, text='Login', command = lambda: print(f"Entrando como {escolha_user.get()}..."), bg = 'black', fg='green', font = 'Times 10')
+login = tkinter.Button(banco, text='Login', command=lambda: print(f"Entrando como {escolha_user.get()}..."), bg='black', fg='green', font='Times 10')
 
-tkinter.Label(banco, text='          ', bg = 'black').grid(row=0, column=0)
+tkinter.Label(banco, text='          ', bg='black').grid(row=0, column=0)
 user.grid(row=0, column=1, sticky='nswe')
 escolha_user.grid(row=1, column=1, sticky='nswe')
 login.grid(row=2, column=1, sticky='nswe')
+
+login = escolha_user.get()
+usuario = usuarios.Users(login)
+
+if usuario.Login():
+    cliente = tkinter.Toplevel()
+else:
+    root = tkinter.Toplevel()
 
 banco.mainloop()
