@@ -13,14 +13,21 @@ def centralizar(master, coord):
     return f'{posx:.0f}+{posy:.0f}'
 
 
+def login():
+    print(f"Logando como {text_user.get()}")
+
+
 banco = Tk()
 banco.title("PyBank")
 banco.geometry("200x100+"+centralizar(banco, [200, 50]))
 banco.resizable(False, False)
 
 user = Label(banco, text='Usuário', font='Times 10')
-user.place(relx=0, rely=0)
+user.place(relx=0, rely=0.3, anchor='w')
 text_user = Spinbox(banco, values=('Root', 'Cliente'), wrap=True)
-text_user.place(relx=0.3, rely=0)
+text_user.place(relx=0.3, rely=0.3, anchor='w')
+cmd_login = Button(banco, text='Login', command=login)
+cmd_login.place(relx=0.4, rely=0.5)
+
 
 banco.mainloop()
