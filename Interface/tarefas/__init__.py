@@ -1,18 +1,10 @@
 from Interface import menu
-
+# Esse módulo cuida dos processos e tratamento de informações
 class Cliente:
     def __init__(self, bd_clientes):
         self.a = bd_clientes
 
     def findCliente(self, x, y=0, z=0):
-        """
-        -> Verifica se determinado cliente existe dentro do arquivo a(clientes.txt), procurando se o CPF(x) e a senha(y)
-        existem dentro do arquivo.
-        :param x: CPF
-        :param y: Senha
-        :param z: Número do Cartão
-        :return: retorna um valor booleano referente ao fato do registro existir(True) ou não(False)
-        """
         try:
             achou = False
             arq = open(self.a, 'r')
@@ -42,12 +34,6 @@ class Cliente:
                 return False
 
     def cadastra(self, c):
-        """
-        -> cadastra os valores do objeto(c) no arquivo de nome a
-        :param a: arquivo onde será cadastrado os dados de c
-        :param c: objeto que está armazenando os dados
-        :return: none
-        """
         try:
             arq = open(self.a, 'a')
         except:
@@ -154,14 +140,6 @@ class Movimentos:
                 print("Pagamento não encontrado!")
 
 def validaCPF(x):
-    """
-    -> Recebe um cpf(x) e retorna uma lista com:
-    - Espaço 0: CPF(x)
-    -Espaço 1: Espelho de x
-    -Espaço 2: Lista vazia que será usada como intermediária entre 0 e 1
-    :param x: cpf digitado
-    :return: lista com 3 sublistas
-    """
     valida = [[], [], []]
     while True:
         try:
@@ -204,12 +182,6 @@ def validaCPF(x):
 
 
 def validaTrans(idem, x=0):
-    """
-    -> Recebe o valor da transação e imprime na tela se ela estará liberada ou não
-    :param x: valor em reais da trasação
-    :param idem: localizador do cliente
-    :return: none
-    """
     arq = open('clientes.txt', 'r')
     for linha in arq:
         reg = linha.split(";")
@@ -226,11 +198,6 @@ def validaTrans(idem, x=0):
 
 
 def arquivoExiste(x):
-    """
-    -> Verifica se o arquivo x existe dentro do projeto
-    :param x: arquivo a ser procurado
-    :return: booleano True(Existe)/False(Não Existe)
-    """
     try:
         a = open(x, 'rt')
         a.close()
@@ -241,11 +208,6 @@ def arquivoExiste(x):
 
 
 def criar(x):
-    """
-    -> Cria um arquivo de nome x
-    :param x: nome do arquivo
-    :return: none
-    """
     try:
         a = open(x, 'wt+')
         a.close()
@@ -291,12 +253,6 @@ def verifCart(a, x):
 
 
 def leiaInt(x):
-    """
-    -> Recebe um valor x e retorna x convertido em inteiro. Caso o valor não possa ser convertido
-    a função dará erro e pedirá um novo valor.
-    :param x: valor a ser convertido para inteiro
-    :return: retorna o valor inteiro
-    """
     while True:
         try:
             entrada = int(input(x))
@@ -311,12 +267,6 @@ def leiaInt(x):
 
 
 def leiaFloat(x):
-    """
-       -> Recebe um valor x e retorna x convertido em decimal. Caso o valor não possa ser convertido
-       a função dará erro e pedirá um novo valor.
-       :param x: valor a ser convertido para decimal
-       :return: retorna o valor decimal
-       """
     while True:
         try:
             entrada = float(input(x).replace(',', '.'))

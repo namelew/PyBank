@@ -1,3 +1,4 @@
+# cria dois usuários
 class Users:
     def __init__(self, acesso):
         self.acesso = acesso

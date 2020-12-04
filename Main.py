@@ -1,3 +1,4 @@
+# importando módulos e bibliotecas
 from Interface import menu, tarefas, usuarios
 from time import sleep
 
@@ -11,7 +12,7 @@ class Cadastro:
         self.senha = senha
         self.limite = limite
 
-
+# Criando os arquivos txt
 arq = "clientes.txt"
 if not tarefas.arquivoExiste(arq):
     tarefas.criar(arq)
@@ -25,12 +26,13 @@ if not tarefas.arquivoExiste(cart):
 user = usuarios.Users
 cliente = tarefas.Cliente(arq)
 movimento = tarefas.Movimentos(fila)
-
+# iniciando o programa
 while True:
     menu.titulo('PyBANK', 6, 44)
     sleep(1)
     user = user(input('Tipo de Usuário: ').upper().strip())
     login = user.Login()
+    # Cliente
     if login:
         while True:
             cpf = input("CPF: ").replace('.', '').replace('.', '').replace('-', '')
@@ -87,7 +89,7 @@ while True:
                     print("Opção Inválida! Digite novamente!")
         else:
             menu.titulo('CLIENTE NÃO ENCONTRADO', 2, 44)
-    else:
+    else: # Root
         senhaRT = input("Senha: ").lower()
         if senhaRT == "root":
             while True:

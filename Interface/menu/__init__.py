@@ -1,5 +1,6 @@
 from Interface.tarefas import *
 from time import sleep as slp
+# cuida da "GUI"
 cor = (
     #cores que vão ser utilizadas no programa
     '\033[m',  # 0 - sem cor
@@ -15,14 +16,6 @@ cor = (
 
 
 def titulo(msg, c=0, tan=0):
-    """
-    -> Formata uma string em um título de tamanho e cor selecionável com uma linha em cima e outra em baixo
-    e com o texto centralizado.
-    :param msg: string
-    :param c: cor do texto(padrão sem cor)
-    :param tan: tamanho do texto(padrão len(string) + 4)
-    :return: none
-    """
     if tan == 0:
         tam = len(msg) + 4
     else:
@@ -34,21 +27,10 @@ def titulo(msg, c=0, tan=0):
 
 
 def linha(tam=44):
-    """
-    -> Retorna uma linha de tamanho selecionável
-    :param tam: tamanho da linha(padrão 42)
-    :return: retorna linha
-    """
     return "-" * tam
 
 
 def menu(list):
-    """
-    -> Recebe uma lista com n strings que representam as opções do menu, formata e exibi ela
-    na tela. Depois, recebe um valor inteiro referente a opção selecionada e o retorna.
-    :param list: lista com as strings das opções
-    :return: opção selecionada
-    """
     c = 1
     print(linha())
     for i in list:
