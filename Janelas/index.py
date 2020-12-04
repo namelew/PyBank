@@ -14,7 +14,8 @@ def centralizar(master, coord):
 
 
 def login():
-    print(f"Logando como {text_user.get()}")
+    login = Label(banco, text=f'Você Entrou Como {text_user.get()}')
+    login.place(relx=0.2, rely=0.7)
 
 
 banco = Tk()
@@ -24,7 +25,7 @@ banco.resizable(False, False)
 
 user = Label(banco, text='Usuário', font='Times 10')
 user.place(relx=0, rely=0.3, anchor='w')
-text_user = Spinbox(banco, values=('Root', 'Cliente'), wrap=True)
+text_user = Spinbox(banco, values=("--- ---",'Root', 'Cliente'), wrap=True, justify='center')
 text_user.place(relx=0.3, rely=0.3, anchor='w')
 cmd_login = Button(banco, text='Login', command=login)
 cmd_login.place(relx=0.4, rely=0.5)
