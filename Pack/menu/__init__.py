@@ -1,4 +1,4 @@
-from Interface.tarefas import *
+from tarefas import *
 from time import sleep as slp
 cor = (
     #cores que vão ser utilizadas no programa

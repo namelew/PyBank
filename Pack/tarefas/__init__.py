@@ -1,4 +1,4 @@
-from Interface import menu
+import menu
 
 class Cliente:
     def __init__(self, bd_clientes):

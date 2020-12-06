@@ -1,4 +1,5 @@
 from tkinter import *
+from Pack import usuarios
 class Login(Frame):
     def __init__(self, parent):
         super().__init__()
@@ -6,19 +7,22 @@ class Login(Frame):
         self['width'] = 200
         self['height'] = 100
 
-        user = Label(self, text='Usuário', font='Times 10')
-        user.place(x=75,y=10)
+        self.user = Label(self, text='Usuário', font='Times 10')
+        self.user.place(x=75,y=10)
         self.text_user = Spinbox(self, values=("--- ---",'Root', 'Cliente'), wrap=True, justify='center')
         self.text_user.place(x=35,y=30)
-        cmd_login = Button(self, text='Login', command=self.login)
-        cmd_login.place(x=80, y=50)
+        self.cmd_login = Button(self, text='Login', command=self.login)
+        self.cmd_login.place(x=80, y=50)
 
     def login(self):
-        usuarios = ['Cliente', 'Root']
         esc = self.text_user.get()
-        if esc != '--- ---' and esc in usuarios:
+        if esc != '--- ---' and usuarios.Users(esc):
             login = Label(self, text=f'Você Entrou Como {esc}')
             login.place(x=30, y=70)
+        elif esc != '--- ---' and not usuarios.Users(esc):
+            self.cmd_login.place(x=5000, y=5000)
+            self.user.place(x=5000, y=5000)      
+
 
 def centralizar(master, coord):
     largura = int(coord[0])
