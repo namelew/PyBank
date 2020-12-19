@@ -2,7 +2,6 @@
 from Interface import menu, tarefas, usuarios
 from time import sleep
 
-
 class Cadastro:
     def __init__(self, nome, sobre, cpf, ncar, senha, limite):
         self.nome = nome
